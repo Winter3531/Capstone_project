@@ -1,0 +1,32 @@
+.sign-up-modal {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+}
+
+#sign-up-header {
+    text-align: center;
+    padding: 10px;
+}
+
+.sign-up-form {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.sign-up-input {
+    margin: 2px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+#sign-up-submit {
+    margin: 8px;
+    align-self: center;
+    width: 50%;
+    background-color: #50c878;
+}
