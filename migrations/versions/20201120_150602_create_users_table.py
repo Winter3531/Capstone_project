@@ -34,6 +34,18 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
+    op.create_table('recipes',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('owner_id', sa.Integer(), nullable=False),
+    sa.Column('recipe_type', sa.Enum('appetizer', 'breakfast', 'entree', 'side', 'dessert', 'other')),
+    sa.Column('recipe_title', sa.String(60), nullable=False),
+    sa.Column('preperation_time', sa.Integer(), nullable=False),
+    sa.Column('notes', sa.String()),
+    sa.Column('ingredients', sa.String(), nullable=False),
+    sa.Column('instructions', sa.String(), nullable=False),
+    sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    )
 
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
