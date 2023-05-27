@@ -1,0 +1,120 @@
+.post-recipe-modal {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    margin-left: 220px;
+    margin-right: 220px;
+    background-color: white;
+    width: 1200px;
+    /* padding-left: 50px; */
+}
+
+#post-recipe-header {
+    text-align: center;
+}
+
+.recipe-details-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#title-input {
+    width: 300px;
+    margin: 5px;
+    margin-left: 6px;
+    border-radius: 8px;
+    border: solid 1px grey;
+}
+
+#recipe-type-select {
+    width: 150px;
+    margin: 5px;
+    border-radius: 8px;
+    border: solid 1px grey;
+}
+
+#time-input {
+    width: 160px;
+    margin: 5px;
+    border-radius: 8px;
+    border: solid 1px grey;
+}
+
+#chef-note-label {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#chef-note-input {
+    align-self: center;
+    height: 80px;
+    width: 520px;
+    margin: 5px;
+    border-radius: 8px;
+    border: solid 1px grey;
+}
+
+.ingredients-div {
+    margin-top: 12%;
+    display: flex;
+    flex-direction: column;
+}
+
+#quantity-input {
+    width: 30px;
+    border-radius: 8px;
+    border: solid 1px grey;
+}
+
+#unit-select {
+    border-radius: 8px;
+    border: solid 1px grey;
+}
+
+.ingredient-input {
+    width: 200px;
+    margin: 5px;
+    border-radius: 8px;
+    border: solid 1px grey;
+}
+
+#add-ingredient-submit {
+    background-color: rgba(80, 200, 120, .7);
+    border: solid 1px grey;
+    border-radius: 8px;
+}
+
+.instructions-div {
+    margin-top: 12%;
+}
+
+#add-step-label {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-step-input {
+    align-self: center;
+    height: 80px;
+    width: 520px;
+    margin: 5px;
+    border-radius: 8px;
+    border: solid 1px grey;
+}
+
+#add-instruction-submit {
+    background-color: rgba(80, 200, 120, .7);
+    border: solid 1px grey;
+    border-radius: 8px;
+}
+
+#recipe-submit-button {
+    margin: 15px;
+    align-self: center;
+    background-color: rgba(80, 200, 120, .7);
+    border: solid 1px grey;
+    border-radius: 8px;
+    width: 150px;
+}

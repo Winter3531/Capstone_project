@@ -27,6 +27,8 @@
 #sign-up-submit {
     margin: 8px;
     align-self: center;
-    width: 50%;
-    background-color: #50c878;
+    width: 35%;
+    background-color: rgba(80, 200, 120, .6);
+    border: solid 1px grey;
+    border-radius: 8px;
 }

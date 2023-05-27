@@ -1,0 +1,19 @@
+.profile-button-layout {
+    display: flex;
+    flex-direction: column;
+}
+
+#create-recipe-button {
+    border: solid 1px grey;
+    border-radius: 8px;
+    background-color: #ffd700;
+    padding: 2px;
+    text-align: center;
+}
+
+#logout-button {
+    border: solid 1px grey;
+    border-radius: 8px;
+    background-color: #ffd700;
+    padding: 2px;
+}

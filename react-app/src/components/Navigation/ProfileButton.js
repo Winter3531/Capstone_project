@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
+import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import CreateRecipeModal from "../CreateRecipesModal";
+
+import './ProfileButton.css'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -44,13 +48,12 @@ function ProfileButton({ user }) {
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
+          <div className="profile-button-layout">
             <li>{user.username}</li>
             <li>{user.email}</li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
-          </>
+            <button id="logout-button" onClick={handleLogout}>Log Out</button>
+            <NavLink exact to="/new-recipe"><button id="create-recipe-button">Create Recipe</button></NavLink>
+          </div>
         ) : (
           <>
             <OpenModalButton

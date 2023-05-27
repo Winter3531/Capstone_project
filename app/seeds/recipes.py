@@ -77,7 +77,7 @@ def seed_recipes():
     )
     recipe_c = Recipe(
         owner_id='3',
-        recipe_type='sides',
+        recipe_type='side',
         recipe_title='Salt-Cured Egg Yolks',
         preperation_time=20160,
         notes='''
@@ -105,7 +105,7 @@ def seed_recipes():
     )
     recipe_d = Recipe(
         owner_id='1',
-        recipe_type='sides',
+        recipe_type='side',
         recipe_title='Fried Gizzard',
         preperation_time='60',
         notes='''
