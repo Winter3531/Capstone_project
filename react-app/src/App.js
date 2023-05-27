@@ -8,6 +8,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import Navigation from "./components/Navigation";
 import CollectionPage from "./components/MainPage";
 import CreateRecipeModal from "./components/CreateRecipesModal";
+import RecipeDetails from "./components/RecipeDetailsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +33,12 @@ function App() {
           </Route>
           <Route path='/new-recipe'>
             <CreateRecipeModal />
+          </Route>
+          <Route path='/recipes/:recipeId'>
+            <RecipeDetails />
+          </Route>
+          <Route path='/recipes/:recipeId/edit'>
+            <UpdateRecipePage />
           </Route>
         </Switch>
       )}
