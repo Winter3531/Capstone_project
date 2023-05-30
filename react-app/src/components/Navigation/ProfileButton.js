@@ -5,7 +5,6 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import CreateRecipeModal from "../CreateRecipesModal";
 
 import './ProfileButton.css'
 

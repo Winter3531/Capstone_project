@@ -35,4 +35,45 @@ def add_recipe():
         db.session.add(new_recipe)
         db.session.commit()
         return new_recipe.recipe_to_dict()
-    return 'form error'
+    return 'Form Error'
+
+
+# ROUTE TO EDIT A RECIPE
+@recipe_routes.route('/<int:recipe_id>', methods=['PUT'])
+@login_required
+def update_recipe(recipe_id):
+    recipe = Recipe.query.get(recipe_id)
+    form = CreateRecipeForm()
+
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        owner_id = form.data['owner_id']
+        recipe_type = form.data['recipe_type']
+        recipe_title = form.data['recipe_title']
+        preperation_time = form.data['preperation_time']
+        notes = form.data['notes']
+        ingredients = form.data['ingredients']
+        instructions = form.data['instructions']
+
+        recipe.owner_id = owner_id
+        recipe.recipe_type = recipe_type
+        recipe.recipe_title = recipe_title
+        recipe.preperation_time = preperation_time
+        recipe.notes = notes
+        recipe.ingredients = ingredients
+        recipe.instructions = instructions
+
+        db.session.commit()
+        return recipe.recipe_to_dict()
+    return "Form Error"
+
+# ROUTE TO DELETE RECIPE
+@recipe_routes.route('/<int:recipe_id>/delete', methods=['DELETE'])
+@login_required
+def delete_recipe(recipe_id):
+    recipe = Recipe.query.get(recipe_id)
+    if recipe:
+        db.session.delete(recipe)
+        db.session.commit()
+        return recipe.recipe_to_dict()
+    return "Recipe not found"
