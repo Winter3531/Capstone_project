@@ -41,15 +41,21 @@ def upgrade():
     sa.Column('recipe_title', sa.String(60), nullable=False),
     sa.Column('preperation_time', sa.Integer(), nullable=False),
     sa.Column('notes', sa.String()),
-    sa.Column('ingredients', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
     )
     op.create_table('instructions',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('recipe_id',sa.Integer(), nullable=False),
+    sa.Column('recipe_id', sa.Integer(), nullable=False),
     sa.Column('step_number', sa.Integer(), nullable=False),
     sa.Column('step_text', sa.String(), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.ForeignKeyConstraint(['recipe_id'], ['recipes.id']),
+    )
+    op.create_table('ingredients',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('recipe_id', sa.Integer(), nullable=False),
+    sa.Column('ingredient_name', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.ForeignKeyConstraint(['recipe_id'], ['recipes.id']),
     )
@@ -64,4 +70,5 @@ def downgrade():
     op.drop_table('users')
     op.drop_table('recipes')
     op.drop_table('instructions')
+    op.drop_table('ingredients')
     # ### end Alembic commands ###
