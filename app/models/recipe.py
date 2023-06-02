@@ -17,9 +17,28 @@ class Recipe(db.Model, UserMixin):
 
     owners = db.relationship('User', back_populates='recipes')
 
-    recipe_instruction = db.relationship('Instruction', back_populates='instruction_recipe', cascade="all, delete-orphan")
+    comments = db.relationship('Comment', back_populates='recipe', cascade="all, delete-orphan")
 
-    recipe_ingredient = db.relationship('Ingredient', back_populates='ingredient_recipe', cascade="all, delete-orphan")
+    recipe_instruction = db.relationship(
+        'Instruction',
+        back_populates='instruction_recipe',
+        cascade="all, delete-orphan"
+    )
+
+    recipe_ingredient = db.relationship(
+        'Ingredient',
+        back_populates='ingredient_recipe',
+        cascade="all, delete-orphan"
+    )
+
+    image = db.relationship(
+        'Image',
+        lazy=True,
+        primaryjoin='and_(Image.image_type=="recipe", foreign(Image.imageable_id)==Recipe.id)',
+        back_populates='image_recipe',
+        cascade="all, delete-orphan"
+    )
+
 
     def recipe_to_dict(self):
         return {
@@ -30,5 +49,7 @@ class Recipe(db.Model, UserMixin):
             'preperation_time': self.preperation_time ,
             'notes': self.notes ,
             'ingredients': [ingredient.ingredient_to_dict() for ingredient in self.recipe_ingredient] if self.recipe_ingredient else [],
-            'instructions': [step.step_to_dict() for step in self.recipe_instruction] if self.recipe_instruction else []
+            'instructions': [step.step_to_dict() for step in self.recipe_instruction] if self.recipe_instruction else [],
+            'images': [img.image_to_dict() for img in self.image] if self.image else [],
+            'comments': [comment.comment_to_dict() for comment in self.comments] if self.comments else [],
         }

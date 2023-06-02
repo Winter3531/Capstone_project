@@ -107,7 +107,7 @@ export const deleteRecipeThunk = (id) => async (dispatch) => {
 export default function recipesReducer(state = initialState, action) {
     switch (action.type) {
         case GET_RECIPES:
-            return {...state, ...action.recipes}
+            return {...action.recipes}
 
         case ADD_RECIPE:
             return {...state, [action.recipe.id]: action.recipe}

@@ -19,8 +19,6 @@ export default function RecipeDetails() {
         dispatch(allRecipesThunk())
     }, [dispatch])
 
-    let count=0
-
     return(
         <div className='Recipe-detail-page'>
                         <div className='header' >
@@ -29,31 +27,32 @@ export default function RecipeDetails() {
             </div>
 
             {recipe &&
-            <div >
-                <h2>{recipe.recipe_title}</h2>
-                <NavLink exact to={`/recipes/edit/${recipe.id}`}><button>Edit Recipe</button></NavLink>
-                <OpenModalButton
-                    buttonText={<FaTrash />}
-                    modalComponent={<DeleteRecipeModal id={recipe.id} />}
-                />
-                <h5>Chef's Notes</h5>
-                <p>{recipe.notes}</p>
-                <h5>Ingredients</h5>
-                {recipe.ingredients.split(';').map((ingredient) => {
-                    return(
-                        <div key={`ingredient-${ingredient}`}>
-                        <p>{ingredient}</p>
-                        </div>
+                <div >
+                    <h2>{recipe.recipe_title}</h2>
+                    <NavLink exact to={`/recipes/edit/${recipe.id}`}><button>Edit Recipe</button></NavLink>
+                    <OpenModalButton
+                        buttonText={<FaTrash />}
+                        modalComponent={<DeleteRecipeModal id={recipe.id} />}
+                    />
+                    <h5>Chef's Notes</h5>
+                    <p>{recipe.notes}</p>
+                    <h5>Ingredients</h5>
+                    {Object.values(recipe.ingredients).map(ing => {
+                        return (
+                            <div key={ing.id} >
+                                <p>{ing.ingredient_name}</p>
+                            </div>
                         )
                     })}
-                <h5>Instructions</h5>
-                {recipe.instructions.split(';').map((step, i) =>{
-                    return (
-                        <div key={i}>
-                        <p>{i+1}. {step}</p>
-                        </div>
-                    )})}
-                    </div>
+                    <h5>Instructions</h5>
+                    {Object.values(recipe.instructions).map((inst, i) => {
+                        return (
+                            <div key={inst.id} >
+                                <p>{i+1}. {inst.step_text}</p>
+                            </div>
+                        )
+                    })}
+                </div>
             }
         </div>
     )

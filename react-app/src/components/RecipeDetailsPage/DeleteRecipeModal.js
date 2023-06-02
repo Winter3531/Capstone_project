@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { useModal } from "../../context/Modal";
 import { FaTrash } from 'react-icons/fa';
-import { deleteRecipeThunk } from "../../store/recipe";
+import { allRecipesThunk, deleteRecipeThunk } from "../../store/recipe";
 
 export default function DeleteRecipeModal ({id}) {
 

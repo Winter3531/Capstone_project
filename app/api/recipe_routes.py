@@ -71,7 +71,9 @@ def update_recipe(recipe_id):
 @recipe_routes.route('/<int:recipe_id>/delete', methods=['DELETE'])
 @login_required
 def delete_recipe(recipe_id):
+    print(recipe_id, '*****************')
     recipe = Recipe.query.get(recipe_id)
+    print(recipe.recipe_to_dict())
     if recipe:
         db.session.delete(recipe)
         db.session.commit()

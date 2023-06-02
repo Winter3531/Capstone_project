@@ -4,7 +4,7 @@ from sqlalchemy.sql import text
 
 def seed_recipes():
     recipe_a = Recipe(
-        owner_id='1',
+        owner_id=1,
         recipe_type='entree',
         recipe_title='Turkey Tostada',
         preperation_time=255,
@@ -14,7 +14,7 @@ def seed_recipes():
                 Next in importance to the tortilla are refried beans. You need something sticky to keep everything from sliding off the tortilla, and refried beans are the answer. I like to make my refried beans with pork lard and venison bacon, but you can use domestic bacon or any salty smoked meat. Other than that, it's your tostada—layer it up with your favorite fixins. I like to top mine up with avocado, jalapenos, tomato, cilantro, and queso fresco. I finish it all off with some lime juice and hot sauce.'''
     )
     recipe_b = Recipe(
-        owner_id='2',
+        owner_id=2,
         recipe_type='entree',
         recipe_title='Oyster Mushroom Gyros',
         preperation_time=90,
@@ -25,7 +25,7 @@ def seed_recipes():
         '''
     )
     recipe_c = Recipe(
-        owner_id='3',
+        owner_id=3,
         recipe_type='side',
         recipe_title='Salt-Cured Egg Yolks',
         preperation_time=20160,
@@ -36,7 +36,7 @@ def seed_recipes():
         '''
     )
     recipe_d = Recipe(
-        owner_id='1',
+        owner_id=1,
         recipe_type='side',
         recipe_title='Fried Gizzard',
         preperation_time='60',

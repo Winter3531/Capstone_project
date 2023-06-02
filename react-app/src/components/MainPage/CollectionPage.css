@@ -31,8 +31,16 @@
 }
 
 .recipe-card {
+    display: flex;
+    justify-content: center;
     width: 550px;
     margin: 10px;
+    padding-top: 25px;
     border: 10px solid #FFD700;
     border-radius: 10px;
+}
+
+.card-image {
+    width: 500px;
+    height: 400px;
 }
