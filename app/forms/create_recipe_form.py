@@ -9,5 +9,3 @@ class CreateRecipeForm(FlaskForm):
     recipe_title = StringField('recipe_title', validators=[DataRequired()])
     preperation_time = IntegerField('preperation_time', validators=[DataRequired()])
     notes = StringField('notes', validators=[DataRequired()])
-    ingredients = StringField('ingredients', validators=[DataRequired()])
-    instructions = StringField('instructions', validators=[DataRequired()])

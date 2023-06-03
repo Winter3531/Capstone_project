@@ -35,8 +35,8 @@ export const allRecipesThunk = () => async (dispatch) => {
     }
 }
 
-export const addRecipeThunk = (recipeData) => async (dispatch) => {
-    const {owner_id, recipe_title, recipe_type, preperation_time, notes, ingredients, instructions } = recipeData
+export const addRecipeThunk = (recipeData, ingredients) => async (dispatch) => {
+    const {owner_id, recipe_title, recipe_type, preperation_time, notes} = recipeData
     const response = await fetch('/api/recipes/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -45,14 +45,27 @@ export const addRecipeThunk = (recipeData) => async (dispatch) => {
             recipe_type,
             recipe_title,
             preperation_time,
-            notes,
-            ingredients,
-            instructions
+            notes
         })
     });
 
+    const recipe = await response.json();
+    // key into recipe ID with recipe.id
+
+    for await (let ingredient of ingredients){
+        let ingredientData = {
+            'recipe_id': recipe.id,
+            'ingredient_text': ingredient
+        };
+
+        console.log('here************************** thunk')
+        await fetch('/api/ingredients/', {
+            method: 'POST',
+            body: JSON.stringify(ingredientData)
+        });
+    }
+
     if(response.ok) {
-        const recipe = await response.json()
         dispatch(addRecipe(recipe))
         return recipe
     }

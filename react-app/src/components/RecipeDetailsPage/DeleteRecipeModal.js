@@ -16,7 +16,7 @@ export default function DeleteRecipeModal ({id}) {
         e.preventDefault();
         dispatch(deleteRecipeThunk(id))
         closeModal();
-        return history.push('/collection')
+        history.push('/collection')
     }
 
     return (

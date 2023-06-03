@@ -12,7 +12,7 @@ export default function CreateRecipeModal () {
     const [errors, setErrors] = useState([]);
     const history = useHistory()
     const [type, setType] = useState('')
-    const [title, setTitle] = useState()
+    const [title, setTitle] = useState('')
     const [time, setTime] = useState('')
     const [notes, setNotes] = useState('')
     const [newIngredient, setNewIngredient] = useState('')
@@ -23,35 +23,30 @@ export default function CreateRecipeModal () {
     const [instructions, setInstructions] = useState([])
 
     const user = useSelector(state => state.session?.user.id)
-    let count = 0
+    let count = 1
 
     const handleAddIngredient = async (e) => {
 		e.preventDefault();
         // Intended Format "2 Tbsp. Salt"
         let ingredientArr = ingredients
-        ingredientArr.push([quantity + ' ' + unit + ' ' + newIngredient])
+        ingredientArr.push(quantity + ' ' + unit + ' ' + newIngredient)
         setIngredients(ingredientArr)
         setUnit('')
         setQuantity(0)
         setNewIngredient('')
-        count += 1
     };
 
     const handleAddInstruction = async (e) => {
         e.preventDefault();
         let instructionsArr = instructions;
-        instructionsArr.push([newStep])
+        instructionsArr.push(newStep)
         setInstructions(instructionsArr)
-        console.log(instructions.join(';'))
         setNewStep('')
-        count += 1
+        count +=1
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const ingredientsStr = ingredients.join(';');
-        const instructionsStr = instructions.join(';');
-
         // INTENDED FORMAT
         // ingredients:"1 cup Milk;2 tbsp. Sugar"
         // instructions:"Step 1.;Step 2."
@@ -67,12 +62,11 @@ export default function CreateRecipeModal () {
             recipe_type: type.toLowerCase(),
             preperation_time: Number(time),
             notes,
-            ingredients: ingredientsStr,
-            instructions: instructionsStr
         }
-        console.log(recipeData)
-        dispatch(addRecipeThunk(recipeData));
-        return history.push('/collection') // **ATTENTION** CHANGE THIS
+        const recipe_id = dispatch(addRecipeThunk(recipeData, ingredients));
+
+        // console.log(recipeData, ingredients, instructions);
+        // history.push('/collection') // **ATTENTION** CHANGE THIS
     };
 
 
@@ -205,8 +199,8 @@ export default function CreateRecipeModal () {
                 <div>
                     <h5>Instructions</h5>
                         {instructions.length ? (
-                            instructions.map(i =>
-                                <li key={i} >{i}</li>
+                            instructions.map((step, i) =>
+                                <li key={`step-${i}`} >{i + 1}. {step}</li>
                                 )
                                 ) : (
                                     <p>None</p>

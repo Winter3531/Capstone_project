@@ -28,14 +28,12 @@ def add_recipe():
                 recipe_type = form.data['recipe_type'],
                 recipe_title = form.data['recipe_title'],
                 preperation_time = form.data['preperation_time'],
-                notes = form.data['notes'],
-                ingredients = form.data['ingredients'],
-                instructions = form.data['instructions']
+                notes = form.data['notes']
         )
         db.session.add(new_recipe)
         db.session.commit()
         return new_recipe.recipe_to_dict()
-    return 'Form Error'
+    return 'Form Error recipe'
 
 
 # ROUTE TO EDIT A RECIPE
