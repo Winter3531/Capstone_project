@@ -8,15 +8,15 @@ class Image(db.Model, UserMixin):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True)
     image_type = db.Column(db.Enum('comment', 'recipe'), nullable=False)
-    imageable_id = db.Column(db.Integer, nullable=False)
-    preview = db.Column(db.Boolean, default=False, nullable=False)
-    image = db.Column(db.String, nullable=False)
+    imageable_id = db.Column(db.Integer(), nullable=False)
+    preview = db.Column(db.Boolean, default=False)
+    image = db.Column(db.String(), nullable=False)
 
-    image_recipe = db.relationship('Recipe', primaryjoin='and_(Image.image_type=="recipe", foreign(Image.imageable_id)==Recipe.id)')
+    image_recipe = db.relationship('Recipe', primaryjoin='and_(Image.image_type=="recipe", foreign(Image.imageable_id)==Recipe.id)', overlaps="image")
 
-    image_comment = db.relationship('Comment', primaryjoin='and_(Image.image_type=="comment", foreign(Image.imageable_id)==Comment.id)')
+    image_comment = db.relationship('Comment', primaryjoin='and_(Image.image_type=="comment", foreign(Image.imageable_id)==Comment.id)', overlaps="image")
 
     def image_to_dict(self):
         return {

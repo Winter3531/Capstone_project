@@ -4,11 +4,12 @@ import { NavLink, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 import { allRecipesThunk } from '../../store/recipe';
 import { getAllCommentsThunk } from '../../store/comment';
-import { FaTrash, FaRegCommentDots } from 'react-icons/fa';
+import { FaTrash, FaRegCommentDots, FaRegEdit } from 'react-icons/fa';
 import OpenModalButton from "../OpenModalButton";
 import DeleteRecipeModal from './DeleteRecipeModal';
 import AddCommentModal from './AddCommentModal';
 import DeleteCommentModal from './DeleteCommentModal';
+import EditCommentModal from './EditCommentModal';
 
 import './RecipeDetails.css'
 
@@ -45,7 +46,7 @@ export default function RecipeDetails() {
                         <img src={previewImg[0].image} alt='recipe-image' id="details-preview-image" />
                         {sessionUser?.id === recipe.owner_id ?
                             <div className='edit-delete-buttons'>
-                                <NavLink exact to={`/recipes/edit/${recipe.id}`}><button>Edit Recipe</button></NavLink>
+                                <NavLink exact to={`/recipes/edit/${recipe.id}`}><button><FaRegEdit /></button></NavLink>
                                 <OpenModalButton
                                     buttonText={<FaTrash />}
                                     modalComponent={<DeleteRecipeModal id={recipe.id} />}
@@ -93,15 +94,21 @@ export default function RecipeDetails() {
                                             </div>
                                             <p>{comment.comment}</p>
                                         </div>
-                                        {comment.image.length ?
+                                        {comment?.image.length ?
                                             <img className='comment-card-image' src={comment.image[0].image} alt={comment.id} height={200} width={300} />
                                             : <></>
                                         }
                                         {comment.owner.id === sessionUser.id ?
+                                        <div className='comment-edit-delete'>
                                             <OpenModalButton
                                             buttonText={<FaTrash />}
                                             modalComponent={<DeleteCommentModal commentId={comment.id} recipeId={recipe.id} />}
                                             />
+                                            <OpenModalButton
+                                            buttonText={<FaRegEdit />}
+                                            modalComponent={<EditCommentModal commentId={comment.id} recipeId={recipe.id} />}
+                                            />
+                                        </div>
                                             : <></>
                                         }
                                     </div>

@@ -15,7 +15,6 @@ export default function DeleteCommentModal ({commentId, recipeId}) {
 
     const handleDelete = async (e) => {
         e.preventDefault();
-        console.log(commentId);
         dispatch(deleteCommentThunk(commentId));
         closeModal();
         // (dispatch(getAllCommentsThunk(recipeId)));

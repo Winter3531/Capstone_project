@@ -39,14 +39,56 @@ export const addCommentThunk = (commentData, image) => async (dispatch) => {
         body: JSON.stringify(commentData)
     })
 
-    const addImage = await fetch('/api/')
+    let newComment = await response.json();
+    const imageData = {
+        'imageable_id': newComment.id,
+        'image': image,
+    }
 
-    if (response.ok) {
-        const comment = await response.json();
-        dispatch(addComment(comment));
-        return comment;
+    const addImage = await fetch('/api/images/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(imageData)
+    })
+
+    const commentRes = await fetch(`/api/comments/${newComment.id}`)
+
+    if (commentRes.ok) {
+        console.log('response OK ************************')
+        newComment = await commentRes.json();
+        dispatch(addComment(newComment));
+        return newComment;
     };
 };
+
+export const editCommentThunk = (commentId, commentData, imageId, image) => async (dispatch) => {
+    const response = await fetch(`/api/comments/${commentId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(commentData)
+    })
+
+    let editComment = await response.json();
+    const imageData = {
+        'imageable_id': commentId,
+        'image': image,
+    }
+
+    const editImage = await fetch(`/api/images/${imageId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(imageData)
+
+    })
+
+    const commentRes = await fetch(`/api/comments/${commentId}`)
+
+    if(commentRes.ok){
+        editComment = await commentRes.json()
+        dispatch(addComment(editComment));
+        return editComment;
+    }
+}
 
 export const deleteCommentThunk = (id) => async (dispatch) => {
     const response = await fetch(`/api/comments/${id}`, {

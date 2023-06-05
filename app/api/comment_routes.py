@@ -33,13 +33,27 @@ def add_comment():
     return jsonify('Form Error Comment')
 
 # ROUTE TO DELETE A COMMENT
-@comment_routes.route('/<int:comment_id>', methods=['DELETE'])
+@comment_routes.route('/<int:comment_id>', methods=['GET', 'PUT', 'DELETE'])
 @login_required
 def delete_comment(comment_id):
-    comment = Comment.query.get(comment_id)
+    edit_comment = Comment.query.get(comment_id)
+    form = CreateCommentForm()
 
-    if comment:
-        db.session.delete(comment)
+    if edit_comment and request.method == 'GET':
+        return edit_comment.comment_to_dict()
+
+    if edit_comment and request.method == 'PUT':
+        form['csrf_token'].data = request.cookies['csrf_token']
+        if form.validate_on_submit():
+            comment = form.data['comment']
+
+            edit_comment.comment = comment
+
+            db.session.commit()
+            return edit_comment.comment_to_dict()
+
+    if edit_comment and request.method == 'DELETE':
+        db.session.delete(edit_comment)
         db.session.commit()
-        return comment.comment_to_dict()
+        return edit_comment.comment_to_dict()
     return jsonify('Comment not found')
