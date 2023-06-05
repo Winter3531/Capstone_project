@@ -1,1 +1,16 @@
 /* TODO Add site wide styles */
+
+body {
+    display: flex;
+    background-color: rgba(80, 200, 120, .44);
+}
+
+#root {
+    display: flex;
+}
+
+a:link,
+a:visited {
+    color: black;
+    text-decoration: none;
+}

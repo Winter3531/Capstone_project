@@ -1,0 +1,46 @@
+.full-page {
+    align-self: center;
+    width: 1200px;
+    background-color: white;
+    margin-left: 220px;
+    margin-right: 220px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+}
+
+#g-and-g-header {
+    font-size: 100px;
+    padding: 0px;
+    margin: 30px;
+    text-align: center;
+}
+#title-image {
+    border: 10px solid #FFD700;
+    height: 170px;
+    width: 170px;
+}
+
+.recipe-card-layout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.recipe-card {
+    display: flex;
+    justify-content: center;
+    width: 550px;
+    margin: 10px;
+    padding-top: 25px;
+    border: 10px solid #FFD700;
+    border-radius: 10px;
+}
+
+.card-image {
+    width: 500px;
+    height: 400px;
+}
