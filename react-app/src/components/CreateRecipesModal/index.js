@@ -15,6 +15,7 @@ export default function CreateRecipeModal () {
     const [title, setTitle] = useState('')
     const [time, setTime] = useState('')
     const [notes, setNotes] = useState('')
+    const [image, setImage] = useState('')
     const [newIngredient, setNewIngredient] = useState('')
     const [quantity, setQuantity] = useState(0)
     const [unit, setUnit] = useState('')
@@ -63,10 +64,10 @@ export default function CreateRecipeModal () {
             preperation_time: Number(time),
             notes,
         }
-        const recipe_id = dispatch(addRecipeThunk(recipeData, ingredients));
+        const recipe_id = await dispatch(addRecipeThunk(recipeData, ingredients, instructions));
 
         // console.log(recipeData, ingredients, instructions);
-        // history.push('/collection') // **ATTENTION** CHANGE THIS
+        history.push(`/recipes/${recipe_id.id}`) // **ATTENTION** CHANGE THIS
     };
 
 
@@ -82,6 +83,17 @@ export default function CreateRecipeModal () {
                         onChange={(e => setTitle(e.target.value))}
                         placeholder="Recipe Title"
                         id='title-input'
+                    />
+                </label>
+
+                <label>
+                    Preview image
+                    <input
+                        type="text"
+                        value={image}
+                        onChange={(e => setImage(e.target.value))}
+                        placeholder="Preview Image"
+                        id="preview-image-input"
                     />
                 </label>
 

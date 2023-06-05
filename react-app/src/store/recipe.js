@@ -35,7 +35,7 @@ export const allRecipesThunk = () => async (dispatch) => {
     }
 }
 
-export const addRecipeThunk = (recipeData, ingredients) => async (dispatch) => {
+export const addRecipeThunk = (recipeData, ingredients, instructions) => async (dispatch) => {
     const {owner_id, recipe_title, recipe_type, preperation_time, notes} = recipeData
     const response = await fetch('/api/recipes/', {
         method: 'POST',
@@ -55,17 +55,33 @@ export const addRecipeThunk = (recipeData, ingredients) => async (dispatch) => {
     for await (let ingredient of ingredients){
         let ingredientData = {
             'recipe_id': recipe.id,
-            'ingredient_text': ingredient
+            'ingredient_name': ingredient
         };
 
-        console.log('here************************** thunk')
-        await fetch('/api/ingredients/', {
+        const addIngredient = await fetch('/api/ingredients/', {
             method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(ingredientData)
         });
     }
 
-    if(response.ok) {
+    let step_count = 1
+    for await (let instruction of instructions){
+        let instructionData = {
+            'recipe_id': recipe.id,
+            'step_number': step_count,
+            'step_text': instruction
+        }
+
+        const addInstruction = await fetch('/api/instructions/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(instructionData)
+        })
+        step_count++
+    }
+
+    if(response.ok ) {
         dispatch(addRecipe(recipe))
         return recipe
     }
@@ -132,5 +148,5 @@ export default function recipesReducer(state = initialState, action) {
 
         default:
             return state;
-    }
-}
+    };
+};

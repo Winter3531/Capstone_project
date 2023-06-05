@@ -28,7 +28,7 @@ class Comment(db.Model, UserMixin):
     def comment_to_dict(self):
         return {
             'id': self.id,
-            'owner_id': self.owner_id,
+            'owner': self.owners.to_dict(),
             'recipe_id': self.recipe_id,
             'comment': self.comment,
             'image': [img.image_to_dict()  for img in self.image] if self.image else []

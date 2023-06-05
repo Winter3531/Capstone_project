@@ -2,6 +2,7 @@ from flask import Blueprint, request
 from flask_login import login_required
 from app.models import db
 from app.models.recipe import Recipe
+from app.models.comment import Comment
 from app.forms.create_recipe_form import CreateRecipeForm
 
 recipe_routes = Blueprint('recipes', __name__)
@@ -9,7 +10,7 @@ recipe_routes = Blueprint('recipes', __name__)
 
 # ROUTE TO GET ALL RECIPES
 @recipe_routes.route('/')
-@login_required
+# @login_required
 def recipes():
     recipes = Recipe.query.all()
     return {recipe.id: recipe.recipe_to_dict() for recipe in recipes}
@@ -69,11 +70,15 @@ def update_recipe(recipe_id):
 @recipe_routes.route('/<int:recipe_id>/delete', methods=['DELETE'])
 @login_required
 def delete_recipe(recipe_id):
-    print(recipe_id, '*****************')
     recipe = Recipe.query.get(recipe_id)
-    print(recipe.recipe_to_dict())
     if recipe:
         db.session.delete(recipe)
         db.session.commit()
         return recipe.recipe_to_dict()
     return "Recipe not found"
+
+# ROUTE TO GET RECIPE COMMENTS
+@recipe_routes.route('/<int:recipe_id>/comments', methods=['GET'])
+def get_comments(recipe_id):
+    comments = Comment.query.filter_by(recipe_id = recipe_id)
+    return {comment.id: comment.comment_to_dict() for comment in comments}

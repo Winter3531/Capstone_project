@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { useModal } from "../../context/Modal";
-import { FaTrash } from 'react-icons/fa';
-import { allRecipesThunk, deleteRecipeThunk } from "../../store/recipe";
+import { deleteRecipeThunk } from "../../store/recipe";
 
 export default function DeleteRecipeModal ({id}) {
 

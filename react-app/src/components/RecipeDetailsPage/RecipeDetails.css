@@ -4,4 +4,38 @@
     background-color: white;
     margin-left: 220px;
     margin-right: 220px;
+    display: flex;
+    flex-direction: column;
+}
+
+#details-preview-image {
+    width: 1100px;
+    height: 620px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.comment-card {
+    display: flex;
+    border: solid 1px black;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 600px;
+}
+
+.comment-card-image {
+    margin-left: 50px;
+    border-radius: 10px;
+}
+
+.comment-card-user-tile {
+    display: flex;
+    font-weight: bolder;
+}
+.comment-card-user-tile-image {
+    border-radius: 100%;
+    margin-right: 10px;
 }

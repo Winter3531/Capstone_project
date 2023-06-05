@@ -51,5 +51,5 @@ class Recipe(db.Model, UserMixin):
             'ingredients': [ingredient.ingredient_to_dict() for ingredient in self.recipe_ingredient] if self.recipe_ingredient else [],
             'instructions': [step.step_to_dict() for step in self.recipe_instruction] if self.recipe_instruction else [],
             'images': [img.image_to_dict() for img in self.image] if self.image else [],
-            'comments': [comment.comment_to_dict() for comment in self.comments] if self.comments else [],
+            # 'comments': [comment.comment_to_dict() for comment in self.comments] if self.comments else [],
         }
