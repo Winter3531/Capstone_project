@@ -49,7 +49,7 @@ export const addCommentThunk = (commentData, image) => async (dispatch) => {
             'image': image,
         }
 
-        const addImage = await fetch('/api/images/comment', {
+        const addImage = await fetch('/api/images/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(imageData)
