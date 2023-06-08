@@ -15,7 +15,6 @@ def add_instruction():
 
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    print(request.data)
     if form.validate_on_submit():
         new_step = Instruction(
             recipe_id = form.data['recipe_id'],
