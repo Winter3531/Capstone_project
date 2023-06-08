@@ -4,6 +4,7 @@ import { NavLink, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 import { allRecipesThunk } from '../../store/recipe';
 import { getAllCommentsThunk } from '../../store/comment';
+import { getIngredientThunk } from '../../store/ingredient';
 import { FaTrash, FaRegCommentDots, FaRegEdit } from 'react-icons/fa';
 import OpenModalButton from "../OpenModalButton";
 import DeleteRecipeModal from './DeleteRecipeModal';
@@ -12,18 +13,23 @@ import DeleteCommentModal from './DeleteCommentModal';
 import EditCommentModal from './EditCommentModal';
 
 import './RecipeDetails.css'
+import { getInstructionThunk } from '../../store/instruction';
 
 export default function RecipeDetails() {
 
     const dispatch = useDispatch();
     const { recipeId } = useParams();
     const recipe = useSelector(state => state?.recipes[recipeId])
+    const ingredients = useSelector(state => state?.ingredients)
+    const instructions = useSelector(state => state?.instructions)
     const comments = useSelector(state => state?.comments)
     const sessionUser = useSelector(state => state?.session?.user)
 
     useEffect(() => {
         dispatch(allRecipesThunk())
         dispatch(getAllCommentsThunk(recipeId))
+        dispatch(getIngredientThunk(recipeId))
+        dispatch(getInstructionThunk(recipeId))
     }, [dispatch])
 
     const previewImg = recipe?.images.filter(img => {
@@ -43,8 +49,8 @@ export default function RecipeDetails() {
                 <>
                     <div >
                         <h2>{recipe.recipe_title}</h2>
-                        <img src={previewImg[0].image} alt='recipe-image' id="details-preview-image" />
-                        {sessionUser?.id === recipe.owner_id ?
+                        <img src={previewImg[0]?.image} alt='recipe-image' id="details-preview-image" />
+                        {sessionUser && sessionUser?.id === recipe.owner_id ?
                             <div className='edit-delete-buttons'>
                                 <NavLink exact to={`/recipes/edit/${recipe.id}`}><button><FaRegEdit /></button></NavLink>
                                 <OpenModalButton
@@ -56,18 +62,18 @@ export default function RecipeDetails() {
                         <h5>Chef's Notes</h5>
                         <p>{recipe.notes}</p>
                         <h5>Ingredients</h5>
-                        {Object.values(recipe.ingredients).map(ing => {
+                        {Object.values(ingredients).map(ing => {
                             return (
-                                <div key={ing.id} >
+                                <div key={`ing-${ing.id}`} >
                                     <p>{ing.ingredient_name}</p>
                                 </div>
                             )
                         })}
                         <h5>Instructions</h5>
-                        {Object.values(recipe.instructions).map((inst, i) => {
+                        {Object.values(instructions).map((inst) => {
                             return (
                                 <div key={inst.id} >
-                                    <p>{i + 1}. {inst.step_text}</p>
+                                    <p>{inst.step_number}. {inst.step_text}</p>
                                 </div>
                             )
                         })}
@@ -94,11 +100,11 @@ export default function RecipeDetails() {
                                             </div>
                                             <p>{comment.comment}</p>
                                         </div>
-                                        {comment?.image.length ?
+                                        {comment?.image[0]?.image?.length > 1 ?
                                             <img className='comment-card-image' src={comment.image[0].image} alt={comment.id} height={200} width={300} />
                                             : <></>
                                         }
-                                        {comment.owner.id === sessionUser.id ?
+                                        {sessionUser && comment.owner.id === sessionUser.id ?
                                         <div className='comment-edit-delete'>
                                             <OpenModalButton
                                             buttonText={<FaTrash />}

@@ -13,8 +13,9 @@ def add_image():
 
     form['csrf_token'].data = request.cookies['csrf_token']
     new_image = Image(
-        image_type = 'comment',
+        image_type = form.data['image_type'],
         imageable_id = form.data['imageable_id'],
+        preview = form.data['preview'],
         image = form.data['image'],
     )
     db.session.add(new_image)
@@ -28,7 +29,6 @@ def edit_image(img_id):
     image_edit = Image.query.get(img_id)
     form = CreateImageForm()
 
-    print(image_edit, '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
     if image_edit:
         form['csrf_token'].data = request.cookies['csrf_token']
         image = form.data['image']
