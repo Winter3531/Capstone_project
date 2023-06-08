@@ -37,7 +37,7 @@ def upgrade():
     op.create_table('recipes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=False),
-    sa.Column('recipe_type', sa.Enum('appetizer', 'breakfast', 'entree', 'side', 'dessert', 'other')),
+    sa.Column('recipe_type', sa.Enum('appetizer', 'breakfast', 'entree', 'side', 'dessert', 'other', name='recipe_type')),
     sa.Column('recipe_title', sa.String(60), nullable=False),
     sa.Column('preperation_time', sa.Integer(), nullable=False),
     sa.Column('notes', sa.String()),
@@ -70,7 +70,7 @@ def upgrade():
     )
     op.create_table('images',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('image_type', sa.Enum('comment', 'recipe'), nullable=False),
+    sa.Column('image_type', sa.Enum('comment', 'recipe', name='image_type'), nullable=False),
     sa.Column('imageable_id', sa.Integer(), nullable=False),
     sa.Column('preview', sa.Boolean(), default=False, nullable=False),
     sa.Column('image', sa.String(), nullable=False),
