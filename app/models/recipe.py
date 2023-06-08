@@ -11,7 +11,7 @@ class Recipe(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     recipe_title = db.Column(db.String(60), nullable=False)
-    recipe_type = db.Column(db.Enum('appetizer', 'breakfast', 'entree', 'side', 'dessert', 'other'), nullable=False)
+    recipe_type = db.Column(db.Enum('appetizer', 'breakfast', 'entree', 'side', 'dessert', 'other', name='recipe_type'), nullable=False)
     preperation_time = db.Column(db.Integer(), nullable=False)
     notes = db.Column(db.String())
 
