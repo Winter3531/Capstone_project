@@ -174,6 +174,6 @@ def undo_instructions():
     if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.instructions RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute(("DELETE FROM instructions"))
+        db.session.execute("DELETE FROM instructions")
 
     db.session.commit()
