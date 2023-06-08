@@ -24,7 +24,6 @@ export default function CreateRecipeModal () {
     const [instructions, setInstructions] = useState([])
 
     const user = useSelector(state => state.session?.user.id)
-    let count = 1
 
     const handleAddIngredient = async (e) => {
 		e.preventDefault();
@@ -43,7 +42,6 @@ export default function CreateRecipeModal () {
         instructionsArr.push(newStep)
         setInstructions(instructionsArr)
         setNewStep('')
-        count +=1
     };
 
     const handleSubmit = async (e) => {
@@ -64,9 +62,8 @@ export default function CreateRecipeModal () {
             preperation_time: Number(time),
             notes,
         }
-        const recipe_id = await dispatch(addRecipeThunk(recipeData, ingredients, instructions));
+        const recipe_id = await dispatch(addRecipeThunk(recipeData, ingredients, instructions, image));
 
-        // console.log(recipeData, ingredients, instructions);
         history.push(`/recipes/${recipe_id.id}`) // **ATTENTION** CHANGE THIS
     };
 

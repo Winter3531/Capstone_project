@@ -40,21 +40,25 @@ export const addCommentThunk = (commentData, image) => async (dispatch) => {
     })
 
     let newComment = await response.json();
-    const imageData = {
-        'imageable_id': newComment.id,
-        'image': image,
-    }
 
-    const addImage = await fetch('/api/images/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(imageData)
-    })
+    if (image){
+        const imageData = {
+            'image_type': 'comment',
+            'imageable_id': newComment.id,
+            'preview': false,
+            'image': image,
+        }
+
+        const addImage = await fetch('/api/images/comment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(imageData)
+        })
+    }
 
     const commentRes = await fetch(`/api/comments/${newComment.id}`)
 
     if (commentRes.ok) {
-        console.log('response OK ************************')
         newComment = await commentRes.json();
         dispatch(addComment(newComment));
         return newComment;
@@ -69,17 +73,31 @@ export const editCommentThunk = (commentId, commentData, imageId, image) => asyn
     })
 
     let editComment = await response.json();
-    const imageData = {
-        'imageable_id': commentId,
-        'image': image,
+
+    if (image){
+        const imageData = {
+            'image_type': 'comment',
+            'imageable_id': commentId,
+            'preview': false,
+            'image': image,
+        }
+
+        if (imageId){
+            const editImage = await fetch(`/api/images/${imageId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(imageData)
+
+            })
+        }else{
+            const addImage = await fetch('/api/images/comment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(imageData)
+            })
+        }
+
     }
-
-    const editImage = await fetch(`/api/images/${imageId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(imageData)
-
-    })
 
     const commentRes = await fetch(`/api/comments/${commentId}`)
 
