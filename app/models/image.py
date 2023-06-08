@@ -9,7 +9,7 @@ class Image(db.Model, UserMixin):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer(), primary_key=True)
-    image_type = db.Column(db.Enum('comment', 'recipe'), nullable=False)
+    image_type = db.Column(db.Enum('comment', 'recipe', name='image_type'), nullable=False)
     imageable_id = db.Column(db.Integer(), nullable=False)
     preview = db.Column(db.Boolean, default=False)
     image = db.Column(db.String(), nullable=False)
