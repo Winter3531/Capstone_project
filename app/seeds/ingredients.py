@@ -266,6 +266,6 @@ def undo_ingredients():
     if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.ingredients RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute(text("DELETE FROM ingredients"))
+        db.session.execute(("DELETE FROM ingredients"))
 
     db.session.commit()
