@@ -7,8 +7,11 @@ import { updateRecipeThunk } from "../../store/recipe";
 import { allRecipesThunk } from "../../store/recipe";
 import EditInstructionModal from "./EditInstructionModal";
 import OpenModalButton from "../OpenModalButton";
-import { FaTrash } from 'react-icons/fa';
-
+import { FaTrash, FaRegEdit } from 'react-icons/fa';
+import { addIngredientThunk, deleteIngredientThunk, getIngredientThunk } from "../../store/ingredient";
+import DeleteIngredientModal from "./DeleteIngredientModal";
+import DeleteInstructionModal from "./DeleteInstructionModal";
+import { addInstructionThunk } from "../../store/instruction";
 
 export default function UpdateRecipePage() {
 
@@ -27,7 +30,9 @@ export default function UpdateRecipePage() {
 
     const history = useHistory()
     const recipe = useSelector(state => state?.recipes[recipeId])
-    const user = useSelector(state => state.session?.user.id)
+    const ingredients = useSelector(state => state?.ingredients)
+    const instructions = useSelector(state => state?.instructions)
+    const sessionUser = useSelector(state => state.session?.user)
 
     const [errors, setErrors] = useState([]);
 
@@ -38,57 +43,45 @@ export default function UpdateRecipePage() {
         }
     })
 
-    let ingredientArr = recipe?.ingredients.split(';')
-    let instructionArr = recipe?.instructions.split(';')
-
     const [type, setType] = useState(currType[0])
     const [title, setTitle] = useState(recipe?.recipe_title)
     const [time, setTime] = useState(recipe?.preperation_time)
     const [notes, setNotes] = useState(recipe?.notes)
-    const [newIngredient, setNewIngredient] = useState('')
     const [quantity, setQuantity] = useState(0)
     const [unit, setUnit] = useState('')
-    const [ingredients, setIngredients] = useState([])
-    const [newStep, setNewStep] = useState('')
-    const [instructions, setInstructions] = useState([])
-    let count = 0
-
+    const [newIngredient, setNewIngredient] = useState('')
+    const [step_text, setNewStep] = useState('')
 
     const handleAddIngredient = async (e) => {
         e.preventDefault();
         // Intended Format "2 Tbsp. Salt"
-        ingredientArr = ingredients
-        ingredientArr.push([quantity + ' ' + unit + ' ' + newIngredient])
-        setIngredients(ingredientArr)
+        const ingredient_name = `${quantity} ${unit} ${newIngredient}`
+        const recipe_id = recipeId
+        const ingredientData = {
+            recipe_id,
+            ingredient_name
+        }
+        dispatch(addIngredientThunk(ingredientData))
         setUnit('')
         setQuantity(0)
         setNewIngredient('')
     };
 
-    const handleDeleteIngredient = async (e) => {
-        e.preventDefault();
-    }
-
     const handleAddInstruction = async (e) => {
         e.preventDefault();
-        instructionArr = instructions;
-        instructionArr.push([newStep])
-        setInstructions(instructionArr)
+        const recipe_id = recipeId
+        const step_number = Object.values(instructions).length + 1
+        const stepData = {
+            recipe_id,
+            step_number,
+            step_text
+        }
+        dispatch(addInstructionThunk(stepData))
         setNewStep('')
     };
 
-    const handleDeleteStep = async (i, e) => {
-        e.preventDefault();
-        instructionArr = instructionArr.slice(0,i).concat(instructionArr.slice(i+1))
-        console.log("Doesn't Work")
-        return instructionArr
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const ingredientsStr = ingredientArr.join(';');
-        const instructionsStr = instructionArr.join(';');
-
         // INTENDED FORMAT
         // ingredients:"1 cup Milk;2 tbsp. Sugar"
         // instructions:"Step 1.;Step 2."
@@ -99,22 +92,21 @@ export default function UpdateRecipePage() {
         // recipe_type:"Entree"
 
         const recipeData = {
-            owner_id: user,
+            owner_id: sessionUser.id,
             recipe_type: type.toLowerCase(),
             recipe_title: title,
             preperation_time: Number(time),
-            notes,
-            ingredients: ingredientsStr,
-            instructions: instructionsStr
+            notes
         }
-        console.log(recipeData, "***JSX***")
-        dispatch(updateRecipeThunk(recipeId, recipeData));
+
+        await dispatch(updateRecipeThunk(recipeId, recipeData));
         return history.push(`/recipes/${recipeId}`) // **ATTENTION** CHANGE THIS
     };
 
     useEffect(() => {
         dispatch(allRecipesThunk())
-    }, [dispatch, instructionArr.length])
+        dispatch(getIngredientThunk(recipeId))
+    }, [dispatch])
 
     return (
         <div className="post-recipe-modal">
@@ -220,12 +212,15 @@ export default function UpdateRecipePage() {
 
                     <div>
                         <h5>Ingredient List</h5>
-                        {ingredientArr.length ? (
-                            ingredientArr.map(i =>
-                                <div className="ingredient-arr">
-                                    <p key={i} >{i}</p>
-                                    <FaTrash onClick={handleDeleteIngredient} />
-                                </div>
+                        {ingredients ? (
+                            Object.values(ingredients).map((ingredient, i) =>
+                                    <div key={`ing-${i}`} className="ingredient-arr" >
+                                        <p>{ingredient.ingredient_name}</p>
+                                        <OpenModalButton
+                                            buttonText={<FaTrash />}
+                                            modalComponent={<DeleteIngredientModal ingredientId={ingredient.id} />}
+                                        />
+                                    </div>
                             )
                         ) : (
                             <p>None</p>
@@ -242,7 +237,7 @@ export default function UpdateRecipePage() {
                             Add a Step
                             <textarea
                                 type="text"
-                                value={newStep}
+                                value={step_text}
                                 onChange={(e => setNewStep(e.target.value))}
                                 placeholder="Next Step?"
                                 id="add-step-input"
@@ -253,17 +248,20 @@ export default function UpdateRecipePage() {
 
                     <div>
                         <h5>Instructions</h5>
-                        {instructionArr.length ? (
-                            instructionArr.map((step, i) => {
+                        {instructions ? (
+                            Object.values(instructions).map((step, i) => {
                                 return (
                                     <div>
-                                        <p key={i} >{i+1}. {step}</p>
+                                        <p key={i} >{step.step_number}. {step.step_text}</p>
                                         <OpenModalButton
-                                            buttonText="Edit"
+                                            buttonText={<FaRegEdit />}
                                             // onModalClose={*** set the edited step to the step in the array ***}
-                                            modalComponent={<EditInstructionModal currStep={step} />}
+                                            modalComponent={<EditInstructionModal stepId={step.id} />}
                                         />
-                                        <FaTrash onClick={handleDeleteStep}/>
+                                        <OpenModalButton
+                                            buttonText={<FaTrash />}
+                                            modalComponent={<DeleteInstructionModal stepId={step.id} />}
+                                        />
                                     </div>
                                 )
                             })
