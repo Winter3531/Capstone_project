@@ -26,10 +26,10 @@ export default function CollectionPage(){
                     return (
                         <div key={`recipe-${recipe.id}`} className='recipe-card'>
                             <NavLink exact to={`/recipes/${recipe.id}`} >
-                                {Object.values(recipe.images).map(img => {
+                                {Object.values(recipe.images).map((img, i) => {
                                     if(img.preview === true){
                                         return (
-                                            <img className='card-image' alt={`preview-${img.id}`} src={img.image}  />
+                                            <img key={i} className='card-image' alt={`preview-${img.id}`} src={img.image}  />
                                             )
                                         }
                                     })}

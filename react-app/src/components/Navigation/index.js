@@ -2,22 +2,23 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import { FaHome } from 'react-icons/fa';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
 
 	return (
-		<ul>
-			<li>
-				<NavLink exact to="/collection">Home</NavLink>
-			</li>
+		<div>
+			<p>
+				<NavLink exact to="/collection"><FaHome /></NavLink>
+			</p>
 			{isLoaded && (
-				<li>
+				<div>
 					<ProfileButton user={sessionUser} />
-				</li>
+				</div>
 			)}
-		</ul>
+		</div>
 	);
 }
 

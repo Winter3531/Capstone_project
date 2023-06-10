@@ -6,7 +6,7 @@ import { addRecipeThunk } from "../../store/recipe";
 
 import './CreateRecipeModal.css'
 
-export default function CreateRecipeModal () {
+export default function CreateRecipeModal() {
 
     const dispatch = useDispatch();
     const [errors, setErrors] = useState([]);
@@ -26,7 +26,7 @@ export default function CreateRecipeModal () {
     const user = useSelector(state => state.session?.user.id)
 
     const handleAddIngredient = async (e) => {
-		e.preventDefault();
+        e.preventDefault();
         // Intended Format "2 Tbsp. Salt"
         let ingredientArr = ingredients
         ingredientArr.push(quantity + ' ' + unit + ' ' + newIngredient)
@@ -64,73 +64,80 @@ export default function CreateRecipeModal () {
         }
         const recipe_id = await dispatch(addRecipeThunk(recipeData, ingredients, instructions, image));
 
-        history.push(`/recipes/${recipe_id.id}`) // **ATTENTION** CHANGE THIS
+        history.push(`/recipes/${recipe_id.id}`)
     };
 
 
     return (
         <div className="post-recipe-modal">
             <h1 id='post-recipe-header'>Post a New Recipe</h1>
+            <hr></hr>
             <form className="recipe-details-form">
-                <label>
-                    Recipe Title
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={(e => setTitle(e.target.value))}
-                        placeholder="Recipe Title"
-                        id='title-input'
-                    />
-                </label>
+                <div className="left-details-div">
+                    <label>
+                        Recipe Title
+                        <input
+                            type="text"
+                            value={title}
+                            onChange={(e => setTitle(e.target.value))}
+                            placeholder="Recipe Title"
+                            id='title-input'
+                        />
+                    </label>
 
-                <label>
-                    Preview image
-                    <input
-                        type="text"
-                        value={image}
-                        onChange={(e => setImage(e.target.value))}
-                        placeholder="Preview Image"
-                        id="preview-image-input"
-                    />
-                </label>
+                    <label>
+                        Recipe Type
+                        <select
+                            id='recipe-type-select'
+                            onChange={e => setType(e.target.value)}
+                        >
+                            <option> </option>
+                            <option>Appetizer</option>
+                            <option>Breakfast</option>
+                            <option>Entree</option>
+                            <option>Side</option>
+                            <option>Dessert</option>
+                            <option>Other</option>
+                        </select>
+                    </label>
 
-                <label>
-                    Recipe Type
-                    <select
-                        id='recipe-type-select'
-                        onChange={e => setType(e.target.value)}
-                    >
-                        <option> </option>
-                        <option>Appetizer</option>
-                        <option>Breakfast</option>
-                        <option>Entree</option>
-                        <option>Side</option>
-                        <option>Dessert</option>
-                        <option>Other</option>
-                    </select>
-                </label>
+                    <label>
+                        Preparation Time
+                        <input
+                            type="text"
+                            value={time}
+                            onChange={(e => setTime(e.target.value))}
+                            placeholder="How many minutes?"
+                            id='time-input'
+                        />
+                    </label>
 
-                <label>
-                    Preperation Time
-                    <input
-                        type="text"
-                        value={time}
-                        onChange={(e => setTime(e.target.value))}
-                        placeholder="Provide Time in Minutes"
-                        id='time-input'
-                    />minutes
-                </label>
+                    <label>
+                        Preview Image
+                        <input
+                            type="text"
+                            value={image}
+                            onChange={(e => setImage(e.target.value))}
+                            placeholder="Preview Image"
+                            id="preview-image-input"
+                        />
+                    </label>
+                </div>
 
-                <label id='chef-note-label'>
-                    Chef's Notes
-                    <textarea
-                        type="text"
-                        value={notes}
-                        onChange={(e => setNotes(e.target.value))}
-                        id="chef-note-input"
-                    />
-                </label>
+                <div className="right-details-div" >
+                    <label id='chef-note-label'>
+                        Chef's Notes
+                        <textarea
+                            type="text"
+                            value={notes}
+                            onChange={(e => setNotes(e.target.value))}
+                            id="chef-note-input"
+                        />
+                    </label>
+                </div>
             </form>
+
+            <hr></hr>
 
             <div className="ingredients-div">
                 <form onSubmit={handleAddIngredient} className="add-ingredient-form">
@@ -140,14 +147,14 @@ export default function CreateRecipeModal () {
                             type="decimal"
                             value={quantity}
                             onChange={(e => setQuantity(e.target.value))}
-                            />
+                        />
                     </label>
 
                     <label>Unit
                         <select
                             id='unit-select'
                             onChange={e => setUnit(e.target.value)}
-                            >
+                        >
                             <option></option>
                             <option>tbsp.</option>
                             <option>tsp.</option>
@@ -171,24 +178,26 @@ export default function CreateRecipeModal () {
                             value={newIngredient}
                             onChange={(e => setNewIngredient(e.target.value))}
                             placeholder="Next Ingredient?"
-                            />
+                        />
                     </label>
 
                     <button type="submit" id='add-ingredient-submit'>Add</button>
                 </form>
 
-                <div>
+                <div className="ingredient-list-div">
                     <h5>Ingredient List</h5>
-                        {ingredients.length ? (
-                            ingredients.map(i =>
-                                <li key={i} >{i}</li>
-                                )
-                                ) : (
-                                    <p>None</p>
-                                    )
-                                }
+                    {ingredients.length ? (
+                        ingredients.map(i =>
+                            <li key={i} >{i}</li>
+                        )
+                    ) : (
+                        <p>None</p>
+                    )
+                    }
                 </div>
             </div>
+
+            <hr></hr>
 
             <div className="instructions-div" >
                 <form onSubmit={handleAddInstruction} className="add-instruction-form">
@@ -205,16 +214,16 @@ export default function CreateRecipeModal () {
                     <button type="submit" id='add-instruction-submit'>Add</button>
                 </form>
 
-                <div>
+                <div className="instruction-list-div">
                     <h5>Instructions</h5>
-                        {instructions.length ? (
-                            instructions.map((step, i) =>
-                                <li key={`step-${i}`} >{i + 1}. {step}</li>
-                                )
-                                ) : (
-                                    <p>None</p>
-                                    )
-                                }
+                    {instructions.length ? (
+                        instructions.map((step, i) =>
+                            <p key={`step-${i}`} >{i + 1}. {step}</p>
+                        )
+                    ) : (
+                        <p>None</p>
+                    )
+                    }
                 </div>
 
             </div>
