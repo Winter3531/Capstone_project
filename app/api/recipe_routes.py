@@ -10,6 +10,16 @@ from app.forms.create_ingredient_form import CreateIngredientForm
 
 recipe_routes = Blueprint('recipes', __name__)
 
+def validation_errors_to_error_messages(validation_errors):
+    """
+    Simple function that turns the WTForms validation errors into a simple list
+    """
+    errorMessages = []
+    for field in validation_errors:
+        for error in validation_errors[field]:
+            errorMessages.append(f'{field} : {error}')
+    return errorMessages
+
 
 # ROUTE TO GET ALL RECIPES
 @recipe_routes.route('/')
@@ -38,7 +48,7 @@ def add_recipe():
         db.session.add(new_recipe)
         db.session.commit()
         return new_recipe.recipe_to_dict()
-    return 'Form Error recipe'
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
 # ROUTE TO EDIT A RECIPE
