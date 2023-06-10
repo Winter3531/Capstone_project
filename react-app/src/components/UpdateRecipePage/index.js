@@ -8,7 +8,7 @@ import { allRecipesThunk } from "../../store/recipe";
 import EditInstructionModal from "./EditInstructionModal";
 import OpenModalButton from "../OpenModalButton";
 import { FaTrash, FaRegEdit } from 'react-icons/fa';
-import { addIngredientThunk, deleteIngredientThunk, getIngredientThunk } from "../../store/ingredient";
+import { addIngredientThunk, getIngredientThunk } from "../../store/ingredient";
 import DeleteIngredientModal from "./DeleteIngredientModal";
 import DeleteInstructionModal from "./DeleteInstructionModal";
 import { addInstructionThunk } from "../../store/instruction";

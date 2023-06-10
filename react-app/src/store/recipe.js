@@ -67,34 +67,34 @@ export const addRecipeThunk = (recipeData, ingredients, instructions, image) => 
     })
 
 
-    for await (let ingredient of ingredients){
-        let ingredientData = {
-            'recipe_id': recipe.id,
-            'ingredient_name': ingredient
-        };
+    // for await (let ingredient of ingredients){
+    //     let ingredientData = {
+    //         'recipe_id': recipe.id,
+    //         'ingredient_name': ingredient
+    //     };
 
-        const addIngredient = await fetch('/api/ingredients/add', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(ingredientData)
-        });
-    }
+    //     const addIngredient = await fetch('/api/ingredients/add', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(ingredientData)
+    //     });
+    // }
 
-    let step_count = 1
-    for await (let instruction of instructions){
-        let instructionData = {
-            'recipe_id': recipe.id,
-            'step_number': step_count,
-            'step_text': instruction
-        }
+    // let step_count = 1
+    // for await (let instruction of instructions){
+    //     let instructionData = {
+    //         'recipe_id': recipe.id,
+    //         'step_number': step_count,
+    //         'step_text': instruction
+    //     }
 
-        const addInstruction = await fetch('/api/instructions/add', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(instructionData)
-        })
-        step_count++
-    }
+    //     const addInstruction = await fetch('/api/instructions/add', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(instructionData)
+    //     })
+    //     step_count++
+    // }
 
     if(response.ok ) {
         dispatch(addRecipe(recipe))
