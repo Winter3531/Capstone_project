@@ -67,7 +67,7 @@ function SignupFormModal() {
 					Email
 					<input
 						className='sign-up-input'
-						type="text"
+						type="email"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						placeholder="Email"
@@ -89,7 +89,7 @@ function SignupFormModal() {
 					Profile Image
 					<input
 						className='sign-up-input'
-						type="text"
+						type="url"
 						value={userImage}
 						onChange={(e) => setUserImage(e.target.value)}
 						placeholder="Add Profile Image"

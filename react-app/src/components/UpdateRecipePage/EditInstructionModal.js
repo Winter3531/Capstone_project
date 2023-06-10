@@ -33,6 +33,7 @@ export default function EditInstructionModal ({stepId}) {
                     value={step_text}
                     onChange={(e => setStep(e.target.value))}
                     id="edit-step-input"
+                    required
                 />
                 <button type="submit" id="edit-step-submit">Submit</button>
             </form>
