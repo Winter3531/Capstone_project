@@ -2,7 +2,9 @@
 
 body {
     display: flex;
+    flex-direction: column;
     background-color: rgba(80, 200, 120, .44);
+    align-items: center;
 }
 
 #root {

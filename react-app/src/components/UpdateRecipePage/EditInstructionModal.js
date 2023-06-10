@@ -5,6 +5,8 @@ import { useModal } from "../../context/Modal";
 import { FaTrash } from 'react-icons/fa';
 import { editInstructionThunk } from "../../store/instruction";
 
+import './EditInstructionModal.css'
+
 export default function EditInstructionModal ({stepId}) {
 
     const dispatch = useDispatch();
@@ -33,6 +35,7 @@ export default function EditInstructionModal ({stepId}) {
                     value={step_text}
                     onChange={(e => setStep(e.target.value))}
                     id="edit-step-input"
+                    required
                 />
                 <button type="submit" id="edit-step-submit">Submit</button>
             </form>

@@ -54,7 +54,7 @@ export default function RecipeDetails() {
                             <div className='edit-delete-buttons'>
                                 <NavLink exact to={`/recipes/edit/${recipe.id}`}><button><FaRegEdit /></button></NavLink>
                                 <OpenModalButton
-                                    buttonText={<FaTrash />}
+                                    buttonText={<FaTrash  className='delete-button'/>}
                                     modalComponent={<DeleteRecipeModal id={recipe.id} />}
                                 />
                             </div> : <></>
@@ -107,7 +107,7 @@ export default function RecipeDetails() {
                                         {sessionUser && comment.owner.id === sessionUser.id ?
                                         <div className='comment-edit-delete'>
                                             <OpenModalButton
-                                            buttonText={<FaTrash />}
+                                            buttonText={<FaTrash  className='delete-button'/>}
                                             modalComponent={<DeleteCommentModal commentId={comment.id} recipeId={recipe.id} />}
                                             />
                                             <OpenModalButton

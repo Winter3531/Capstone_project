@@ -21,7 +21,7 @@ def seed_recipes():
         notes='''
             The season for oyster mushrooms can be long. We typically find them in spring and fall in Nebraska, when temperatures warm after winter and the weather begins to cool down again in the fall.
             Wild oyster mushrooms are always found on logs and dead timber and are usually pearl white, light brown, or gray. Interestingly, cultivated oyster mushrooms can come in a wide range of colors, such as blue, yellow, and even salmon pink. Underneath, oyster mushrooms show decurrent gills that run directly down to their stems.
-            For a satisfying, yet vegetarian meal, try this oyster mushroom gyro recipe. It"s super easy to pull together. Oyster mushrooms are so meaty that you won"t miss the meat.
+            For a satisfying, yet vegetarian meal, try this oyster mushroom gyro recipe. It's super easy to pull together. Oyster mushrooms are so meaty that you won't miss the meat.
         '''
     )
     recipe_c = Recipe(
@@ -30,9 +30,9 @@ def seed_recipes():
         recipe_title='Salt-Cured Egg Yolks',
         preperation_time=20160,
         notes='''
-            If you"re lucky enough to have a flock of hens—at some point, in spring or summer, when they"re really laying, the day will come when you think you might be tired of eating eggs. Salt-cured yolks will revive you. The yolk is the only part of the egg that matters to the tongue, the whites serve mostly to protect this orb of flavor, in my opinion.
-            Salt-curing turns the volume up on everything we love about the essence of yolk and transforms the texture so that we can enjoy it on everything. Salt-curing yolks is the most fool-proof of cures, so it"s a great place to start if you"re interested but intimidated by the curing process—all it takes is salt, yolks, and two weeks" time.
-            When they"re done, you"ll have rich, salty, probiotic umami bombs to shave, grate, or slice onto pasta, toast, salad, beans, grilled meats, roasted vegetables, or more eggs. Think of it as your dairy-free parmesan, your fish-free bottarga, and your new favorite way to eat eggs.
+            If you're lucky enough to have a flock of hens—at some point, in spring or summer, when they're really laying, the day will come when you think you might be tired of eating eggs. Salt-cured yolks will revive you. The yolk is the only part of the egg that matters to the tongue, the whites serve mostly to protect this orb of flavor, in my opinion.
+            Salt-curing turns the volume up on everything we love about the essence of yolk and transforms the texture so that we can enjoy it on everything. Salt-curing yolks is the most fool-proof of cures, so it's a great place to start if you're interested but intimidated by the curing process—all it takes is salt, yolks, and two weeks time.
+            When they're done, you'll have rich, salty, probiotic umami bombs to shave, grate, or slice onto pasta, toast, salad, beans, grilled meats, roasted vegetables, or more eggs. Think of it as your dairy-free parmesan, your fish-free bottarga, and your new favorite way to eat eggs.
         '''
     )
     recipe_d = Recipe(
@@ -41,9 +41,9 @@ def seed_recipes():
         recipe_title='Fried Gizzard',
         preperation_time='60',
         notes='''
-            Gizzards seem to be a love-it or hate-it protein. To me, they"re a lot like hearts—hard-working muscle, dense with flavor. But unlike hearts, they"re extra chewy. There are a few approaches to cooking gizzards; the method you choose will depend on your end goal and jaw strength. You can tenderize them, or you can embrace the chewiness and cook them straight up.;
-            This fried gizzard recipe has an optional step for tenderizing, which honestly will make it more palatable for the majority of eaters. But if you"re one of those weirdos like me that likes extra chewy and crunchy food, you can skip that step, which inevitably will mean fewer gizzards that you have to share.;\
-            First, clean the gizzards. You want to remove the plate and the silver skin from the sides of each half. Give them a good rinse to get rid of any gravelly bits. With duck gizzards, you can just split them in half, but with goose or turkey gizzards, cut them down into ¼-inch thick, bite-size pieces. Here"s a helpful video on cleaning gizzards as well.
+            Gizzards seem to be a love-it or hate-it protein. To me, they're a lot like hearts—hard-working muscle, dense with flavor. But unlike hearts, they're extra chewy. There are a few approaches to cooking gizzards; the method you choose will depend on your end goal and jaw strength. You can tenderize them, or you can embrace the chewiness and cook them straight up.;
+            This fried gizzard recipe has an optional step for tenderizing, which honestly will make it more palatable for the majority of eaters. But if you're one of those weirdos like me that likes extra chewy and crunchy food, you can skip that step, which inevitably will mean fewer gizzards that you have to share.;
+            First, clean the gizzards. You want to remove the plate and the silver skin from the sides of each half. Give them a good rinse to get rid of any gravelly bits. With duck gizzards, you can just split them in half, but with goose or turkey gizzards, cut them down into ¼-inch thick, bite-size pieces. Here's a helpful video on cleaning gizzards as well.
         '''
     )
     # recipe_e = Recipe(
