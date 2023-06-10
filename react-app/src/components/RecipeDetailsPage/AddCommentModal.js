@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { addCommentThunk, getAllCommentsThunk } from "../../store/comment";
 
+import './AddCommentModal.css'
+
 
 export default function AddCommentModal ({recipe_id}) {
 
@@ -28,27 +30,28 @@ export default function AddCommentModal ({recipe_id}) {
     }
 
     return (
-        <>
+        <div className="comment-modal">
             <h2>Leave your comment</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="add-comment-form">
                 <textarea
                     type="text"
                     value={comment}
                     onChange={(e => setComment(e.target.value))}
                     id="comment-input"
                     onSubmit={handleSubmit}
+                    placeholder="Comments?"
                     required
                 />
                 <input
                     type="url"
                     value={image}
                     onChange={(e => setImage(e.target.value))}
-                    placeholder="Comment Image"
+                    placeholder="Image"
                     id='comment-image-input'
                     required
                 />
                 <button type="submit" id="comment-submit" >Submit</button>
             </form>
-        </>
+        </div>
     )
 }

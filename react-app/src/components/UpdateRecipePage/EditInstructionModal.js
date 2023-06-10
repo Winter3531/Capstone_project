@@ -5,6 +5,8 @@ import { useModal } from "../../context/Modal";
 import { FaTrash } from 'react-icons/fa';
 import { editInstructionThunk } from "../../store/instruction";
 
+import './EditInstructionModal.css'
+
 export default function EditInstructionModal ({stepId}) {
 
     const dispatch = useDispatch();

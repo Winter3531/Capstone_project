@@ -5,7 +5,7 @@ import { useModal } from "../../context/Modal";
 import { deleteInstructionThunk } from "../../store/instruction";
 
 
-export default function DeleteInstructionModal ({stepId}) {
+export default function DeleteInstructionModal({ stepId }) {
 
     const dispatch = useDispatch();
     const { closeModal } = useModal();
@@ -19,10 +19,12 @@ export default function DeleteInstructionModal ({stepId}) {
 
     return (
         <>
-            <div className="delete-instruction-modal">
+            <div className="delete-recipe-modal">
                 <h2> Are you sure you want to delete this step? </h2>
-                <button onClick={handleDelete}>Yes</button>
-                <button onClick={closeModal}>No</button>
+                <div className="button-div">
+                    <button className="delete-modal-delete-buttons" onClick={handleDelete}>Confirm</button>
+                    <button className="delete-modal-delete-buttons" onClick={closeModal}>Decline</button>
+                </div>
             </div>
         </>
     )

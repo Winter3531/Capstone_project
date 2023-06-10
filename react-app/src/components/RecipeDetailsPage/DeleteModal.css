@@ -1,0 +1,17 @@
+.delete-recipe-modal {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.button-div {
+    display: flex;
+    justify-content: center;
+}
+
+.delete-modal-delete-buttons {
+    margin: 5px;
+    background-color: rgba(80, 200, 120, .7);
+    border: solid 1px grey;
+    border-radius: 8px;
+}
