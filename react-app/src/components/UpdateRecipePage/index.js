@@ -11,7 +11,7 @@ import { FaTrash, FaRegEdit } from 'react-icons/fa';
 import { addIngredientThunk, getIngredientThunk } from "../../store/ingredient";
 import DeleteIngredientModal from "./DeleteIngredientModal";
 import DeleteInstructionModal from "./DeleteInstructionModal";
-import { addInstructionThunk } from "../../store/instruction";
+import { addInstructionThunk, getInstructionThunk } from "../../store/instruction";
 
 export default function UpdateRecipePage() {
 
@@ -47,7 +47,7 @@ export default function UpdateRecipePage() {
     const [title, setTitle] = useState(recipe?.recipe_title)
     const [time, setTime] = useState(recipe?.preperation_time)
     const [notes, setNotes] = useState(recipe?.notes)
-    const [quantity, setQuantity] = useState(0)
+    const [quantity, setQuantity] = useState('')
     const [unit, setUnit] = useState('')
     const [newIngredient, setNewIngredient] = useState('')
     const [step_text, setNewStep] = useState('')
@@ -91,143 +91,176 @@ export default function UpdateRecipePage() {
         // recipe_title:"Title"
         // recipe_type:"Entree"
 
-        const recipeData = {
-            owner_id: sessionUser.id,
-            recipe_type: type.toLowerCase(),
-            recipe_title: title,
-            preperation_time: Number(time),
-            notes
-        }
 
-        await dispatch(updateRecipeThunk(recipeId, recipeData));
-        return history.push(`/recipes/${recipeId}`) // **ATTENTION** CHANGE THIS
+        if (!Number(time)) {
+            return setErrors(['Preparation time must be a number'])
+        } else {
+            setErrors([])
+            const recipeData = {
+                owner_id: sessionUser.id,
+                recipe_type: type.toLowerCase(),
+                recipe_title: title,
+                preperation_time: Number(time),
+                notes
+            }
+            await dispatch(updateRecipeThunk(recipeId, recipeData));
+        }
     };
+
+    const finishBuild = async (e) => {
+        history.push(`/recipes/${recipeId}`)
+    }
 
     useEffect(() => {
         dispatch(allRecipesThunk())
         dispatch(getIngredientThunk(recipeId))
+        dispatch(getInstructionThunk(recipeId))
     }, [dispatch])
 
     return (
         <div className="post-recipe-modal">
-            <h1 id='post-recipe-header'>Post a New Recipe</h1>
+            <h1 id='post-recipe-header'>Edit {recipe.recipe_title} Recipe</h1>
             {recipe &&
-                <form className="recipe-details-form">
-                    <label>
-                        Recipe Title
-                        <input
-                            type="text"
-                            value={title}
-                            onChange={(e => setTitle(e.target.value))}
-                            placeholder="Recipe Title"
-                            id='title-input'
-                        />
-                    </label>
+                <form onSubmit={handleSubmit} className="recipe-details-form">
+                    <ul className="errors-list">
+                        {errors.map((error, idx) => (
+                            <li key={idx}>{error}</li>
+                        ))}
+                    </ul>
+                    <div className="recipe-details-input-div">
+                        <div className="left-details-div">
+                            <label>
+                                Recipe Title
+                                <input
+                                    type="text"
+                                    value={title}
+                                    onChange={(e => setTitle(e.target.value))}
+                                    placeholder="Recipe Title"
+                                    id='title-input'
+                                    required
+                                />
+                            </label>
 
-                    <label>
-                        Recipe Type
-                        <select
-                            id='recipe-type-select'
-                            value={type}
-                            onChange={(e => setType(e.target.value))}
-                        >
-                            <option> </option>
-                            <option>Appetizer</option>
-                            <option>Breakfast</option>
-                            <option>Entree</option>
-                            <option>Side</option>
-                            <option>Dessert</option>
-                            <option>Other</option>
-                        </select>
-                    </label>
+                            <label>
+                                Recipe Type
+                                <select
+                                    id='recipe-type-select'
+                                    value={type}
+                                    onChange={(e => setType(e.target.value))}
+                                    required
+                                >
+                                    <option> </option>
+                                    <option>Appetizer</option>
+                                    <option>Breakfast</option>
+                                    <option>Entree</option>
+                                    <option>Side</option>
+                                    <option>Dessert</option>
+                                    <option>Other</option>
+                                </select>
+                            </label>
 
-                    <label>
-                        Preperation Time
-                        <input
-                            type="text"
-                            value={time}
-                            onChange={(e => setTime(e.target.value))}
-                            placeholder="Provide Time in Minutes"
-                            id='time-input'
-                        />minutes
-                    </label>
+                            <label>
+                                Preperation Time
+                                <input
+                                    type="text"
+                                    value={time}
+                                    onChange={(e => setTime(e.target.value))}
+                                    placeholder="Provide Time in Minutes"
+                                    id='time-input'
+                                    required
+                                />minutes
+                            </label>
+                        </div>
 
-                    <label id='chef-note-label'>
-                        Chef's Notes
-                        <textarea
-                            type="text"
-                            value={notes}
-                            onChange={(e => setNotes(e.target.value))}
-                            id="chef-note-input"
-                        />
-                    </label>
+                        <div className="right-details-div" >
+                            <label id='chef-note-label'>
+                                Chef's Notes
+                                <textarea
+                                    type="text"
+                                    value={notes}
+                                    onChange={(e => setNotes(e.target.value))}
+                                    id="chef-note-input"
+                                    required
+                                />
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" id='recipe-submit-button'>Continue</button>
+                    </div>
                 </form>
             }
 
+            <hr></hr>
+
             {recipe &&
-                <div className="ingredients-div">
-                    <form onSubmit={handleAddIngredient} className="add-ingredient-form">
-                        <label>Quantity
-                            <input
-                                id="quantity-input"
-                                type="decimal"
-                                value={quantity}
-                                onChange={(e => setQuantity(e.target.value))}
-                            />
-                        </label>
+                <>
+                    <div className="ingredients-div">
+                        <form onSubmit={handleAddIngredient} className="add-ingredient-form">
+                            <label>Quantity
+                                <input
+                                    id="quantity-input"
+                                    type="decimal"
+                                    value={quantity}
+                                    onChange={(e => setQuantity(e.target.value))}
+                                />
+                            </label>
 
-                        <label>Unit
-                            <select
-                                id='unit-select'
-                                onChange={e => setUnit(e.target.value)}
-                            >
-                                <option></option>
-                                <option>tbsp.</option>
-                                <option>tsp.</option>
-                                <option>oz.</option>
-                                <option>cup</option>
-                                <option>pint</option>
-                                <option>quart</option>
-                                <option>gallon</option>
-                                <option>gram</option>
-                                <option>lb</option>
-                                <option>mililiter</option>
-                                <option>liter</option>
-                            </select>
-                        </label>
+                            <label>Unit
+                                <select
+                                    id='unit-select'
+                                    onChange={e => setUnit(e.target.value)}
+                                >
+                                    <option></option>
+                                    <option>tbsp.</option>
+                                    <option>tsp.</option>
+                                    <option>oz.</option>
+                                    <option>cup</option>
+                                    <option>pint</option>
+                                    <option>quart</option>
+                                    <option>gallon</option>
+                                    <option>gram</option>
+                                    <option>lb</option>
+                                    <option>mililiter</option>
+                                    <option>liter</option>
+                                </select>
+                            </label>
 
-                        <label>
-                            Ingredient
-                            <input
-                                className="ingredient-input"
-                                type="text"
-                                value={newIngredient}
-                                onChange={(e => setNewIngredient(e.target.value))}
-                                placeholder="Next Ingredient?"
-                            />
-                        </label>
+                            <label>
+                                Ingredient
+                                <input
+                                    className="ingredient-input"
+                                    type="text"
+                                    value={newIngredient}
+                                    onChange={(e => setNewIngredient(e.target.value))}
+                                    placeholder="Next Ingredient?"
+                                    required
+                                />
+                            </label>
 
-                        <button type="submit" id='add-ingredient-submit'>Add</button>
-                    </form>
+                            <button type="submit" id='add-ingredient-submit'>Add</button>
+                        </form>
 
-                    <div>
-                        <h5>Ingredient List</h5>
-                        {ingredients ? (
-                            Object.values(ingredients).map((ingredient, i) =>
-                                    <div key={`ing-${i}`} className="ingredient-arr" >
+                        <div>
+                            <h5>Ingredient List</h5>
+                            {ingredients ? (
+                                Object.values(ingredients).map((ingredient, i) =>
+                                    <div key={`ing-${i}`} className="ingredient-card" >
                                         <p>{ingredient.ingredient_name}</p>
                                         <OpenModalButton
-                                            buttonText={<FaTrash />}
+                                            buttonText={<FaTrash className='delete-button' />}
                                             modalComponent={<DeleteIngredientModal ingredientId={ingredient.id} />}
                                         />
                                     </div>
+                                )
+                            ) : (
+                                <p>None</p>
                             )
-                        ) : (
-                            <p>None</p>
-                        )
-                        }
+                            }
+                        </div>
                     </div>
-                </div>
+                    <hr></hr>
+                </>
             }
 
             {recipe &&
@@ -241,6 +274,7 @@ export default function UpdateRecipePage() {
                                 onChange={(e => setNewStep(e.target.value))}
                                 placeholder="Next Step?"
                                 id="add-step-input"
+                                required
                             />
                         </label>
                         <button type="submit" id='add-instruction-submit'>Add</button>
@@ -251,7 +285,7 @@ export default function UpdateRecipePage() {
                         {instructions ? (
                             Object.values(instructions).map((step, i) => {
                                 return (
-                                    <div>
+                                    <div className="step-card">
                                         <p key={i} >{step.step_number}. {step.step_text}</p>
                                         <OpenModalButton
                                             buttonText={<FaRegEdit />}
@@ -259,7 +293,8 @@ export default function UpdateRecipePage() {
                                             modalComponent={<EditInstructionModal stepId={step.id} />}
                                         />
                                         <OpenModalButton
-                                            buttonText={<FaTrash />}
+                                            className='delete-button'
+                                            buttonText={<FaTrash className='delete-button' />}
                                             modalComponent={<DeleteInstructionModal stepId={step.id} />}
                                         />
                                     </div>
@@ -272,7 +307,7 @@ export default function UpdateRecipePage() {
                     </div>
                 </div>
             }
-            <button type="submit" onClick={handleSubmit} id='recipe-submit-button'>Start Cooking</button>
+            <button onClick={finishBuild} id="finish-recipe-button">Start Cooking!</button>
         </div>
     )
 }

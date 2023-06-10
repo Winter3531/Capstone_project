@@ -5,3 +5,7 @@
 .hidden {
   display: none;
 }
+
+.nav-bar-left {
+  width: 200px;
+}

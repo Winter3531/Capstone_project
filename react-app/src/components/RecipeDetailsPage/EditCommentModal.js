@@ -39,13 +39,15 @@ export default function EditCommentModal ({commentId, recipeId}) {
                     onChange={(e => setComment(e.target.value))}
                     id="comment-input"
                     onSubmit={handleSubmit}
+                    required
                 />
                 <input
-                    type="text"
+                    type="url"
                     value={image}
                     onChange={(e => setImage(e.target.value))}
                     placeholder="Comment Image"
                     id='comment-image-input'
+                    required
                 />
                 <button type="submit" id="comment-submit" >Submit</button>
             </form>

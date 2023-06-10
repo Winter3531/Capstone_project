@@ -2,8 +2,6 @@
     align-self: center;
     width: 1200px;
     background-color: white;
-    margin-left: 220px;
-    margin-right: 220px;
     background-color: rgba(236, 236, 236, 0.971);
     border: solid 1px teal;
     border-radius: 8px;
@@ -24,6 +22,7 @@
     text-decoration: solid underline black 10px;
 }
 #title-image {
+    margin-top: 20px;
     border: 10px solid #FFD700;
     height: 170px;
     width: 170px;
@@ -44,7 +43,8 @@
     width: 550px;
     margin: 10px;
     padding-top: 25px;
-    border: 10px solid #FFD700;
+    background-color: #FFD700;
+    border: 10px solid black;
     border-radius: 10px;
 }
 
