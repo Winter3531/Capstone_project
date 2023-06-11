@@ -1,9 +1,14 @@
 .Recipe-detail-page {
-    align-self: center;
     width: 1200px;
-    background-color: white;
-    margin-left: 220px;
-    margin-right: 220px;
+    background-color: rgba(236, 236, 236, 0.971);
+    border: solid 1px teal;
+    border-radius: 8px;
+    box-shadow: 10px 10px 300px teal;
+    display: flex;
+    flex-direction: column;
+}
+
+.recipe-info-div {
     display: flex;
     flex-direction: column;
 }
@@ -11,8 +16,138 @@
 #details-preview-image {
     width: 1100px;
     height: 620px;
-    padding-left: 50px;
-    padding-right: 50px;
+    border: solid 2px #FFD700;
+    align-self: center;
+    margin: 35px;
+}
+
+#recipe-details-title {
+    align-self: center;
+    font-size: 45px;
+    margin-bottom: 5px;
+}
+
+
+
+.recipe-details-type-time {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+}
+
+#recipe-details-type {
+    font-weight: lighter;
+    margin: 5px;
+}
+
+#recipe-details-time {
+    font-weight: lighter;
+    margin: 5px;
+}
+
+.edit-delete-buttons {
+    align-self: flex-end;
+    margin-right: 50px;
+}
+
+.delete-button {
+    width: 25px;
+    height: 25px;
+    margin-left: 20px;
+}
+
+.edit-button {
+    width: 25px;
+    height: 25px;
+    margin-left: 20px;
+}
+
+#edit-button-edit-recipe {
+    margin-right: 10px;
+}
+
+.comment-button {
+    width: 25px;
+    height: 25px;
+    margin-left: 20px;
+}
+
+.delete-button:hover,
+.edit-button:hover,
+.comment-button:hover {
+    box-shadow: 1px 1px 3px 3px black;
+    background-color: black;
+    border-radius: 5px;
+    color: white;
+}
+
+
+
+.notes-ingredients-instructions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 50px;
+    margin-right: 50px;
+    height: 100%;
+}
+
+
+
+#recipe-details-chef-notes-title {
+    align-self: center;
+    text-decoration: underline;
+}
+
+#recipe-details-chef-notes {
+    line-height: 30px;
+}
+
+
+
+#recipe-details-ingredients-title {
+    margin-top: 40px;
+    margin-left: 70px;
+    text-decoration: underline;
+}
+
+.ingredients-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 1100px;
+    height: 1fr;
+}
+
+.ingredients-lines {
+    margin-left: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+
+#recipe-details-instructions-title {
+    margin-top: 40px;
+    margin-left: 70px;
+    text-decoration: underline;
+    height: 1fr;
+}
+
+.instructions-lines {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+
+.details-comments-div {
+    margin-top: 70px;
+}
+
+.details-comments-button {
+    margin: 30px;
+    margin-left: 50px;
 }
 
 .comment-card {
