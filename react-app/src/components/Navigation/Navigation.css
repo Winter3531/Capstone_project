@@ -8,4 +8,15 @@
 
 .nav-bar-left {
   width: 200px;
+  display: flex;
+}
+
+#nav-bar-home-button {
+  width: 25px;
+  height: 25px;
+  margin-top: 20px;
+}
+
+#nav-bar-profile-div {
+  margin: 20px;
 }

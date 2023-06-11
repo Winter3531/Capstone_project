@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import { FaHome } from 'react-icons/fa';
+
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
@@ -10,12 +11,10 @@ function Navigation({ isLoaded }){
 
 	return (
 		<div className='nav-bar-left'>
-			<p>
-				<NavLink exact to="/collection"><FaHome /></NavLink>
-			</p>
+				<NavLink exact to="/collection"><FaHome id='nav-bar-home-button'/></NavLink>
 			{isLoaded && (
-				<div>
-					<ProfileButton user={sessionUser} />
+				<div id='nav-bar-profile-div'>
+					<ProfileButton id='div-div' user={sessionUser} />
 				</div>
 			)}
 		</div>
