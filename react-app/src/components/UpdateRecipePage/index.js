@@ -108,7 +108,12 @@ export default function UpdateRecipePage() {
     };
 
     const finishBuild = async (e) => {
-        history.push(`/recipes/${recipeId}`)
+        if (Object.keys(ingredients).length > 0 && Object.keys(instructions).length > 0){
+            setErrors([])
+            history.push(`/recipes/${recipeId}`)
+        }else{
+            return setErrors(['A recipe must have at least one ingredient and one step.'])
+        }
     }
 
     useEffect(() => {
