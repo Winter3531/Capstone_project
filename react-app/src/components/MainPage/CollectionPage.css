@@ -1,7 +1,5 @@
 .full-page {
-    align-self: center;
     width: 1200px;
-    background-color: white;
     background-color: rgba(236, 236, 236, 0.971);
     border: solid 1px teal;
     border-radius: 8px;

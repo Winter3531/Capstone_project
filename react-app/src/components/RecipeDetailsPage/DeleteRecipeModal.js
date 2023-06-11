@@ -13,9 +13,9 @@ export default function DeleteRecipeModal({ id }) {
 
     const handleDelete = async (e) => {
         e.preventDefault();
-        dispatch(deleteRecipeThunk(id))
-        closeModal();
-        history.push('/collection')
+        await dispatch(deleteRecipeThunk(id))
+        await closeModal();
+        await history.push('/collection')
     }
 
     return (

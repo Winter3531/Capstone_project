@@ -3,6 +3,15 @@
     flex-direction: column;
 }
 
+#nav-bar-profile-button {
+    border: none;
+    background-color: rgba(0, 0, 0, .0);
+}
+
+.fa-user-circle {
+    font-size: 23px;
+}
+
 #create-recipe-button {
     border: solid 1px grey;
     border-radius: 8px;
