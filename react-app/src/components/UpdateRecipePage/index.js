@@ -293,7 +293,7 @@ export default function UpdateRecipePage() {
                                     <div className="step-card">
                                         <p key={i} >{step.step_number}. {step.step_text}</p>
                                         <OpenModalButton
-                                            buttonText={<FaRegEdit />}
+                                            buttonText={<FaRegEdit className="edit-button"/>}
                                             // onModalClose={*** set the edited step to the step in the array ***}
                                             modalComponent={<EditInstructionModal stepId={step.id} />}
                                         />
