@@ -1,3 +1,21 @@
 .open-modal-button-class {
     border: none;
 }
+
+.login-modal-button-class {
+    border: solid 1px grey;
+    border-radius: 8px;
+    background-color: #ffd700;
+    padding: 2px;
+    text-align: center;
+    margin: 5px;
+}
+
+.signup-modal-button-class {
+    border: solid 1px grey;
+    border-radius: 8px;
+    background-color: #ffd700;
+    padding: 2px;
+    text-align: center;
+    margin: 5px;
+}

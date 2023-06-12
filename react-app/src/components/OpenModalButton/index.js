@@ -17,9 +17,15 @@ function OpenModalButton({
     if (onButtonClick) onButtonClick();
   };
 
-  return (
-    <button className='open-modal-button-class' onClick={onClick}>{buttonText}</button>
-  );
+  if(buttonText === 'Log In'){
+    return  <button className='login-modal-button-class' onClick={onClick}>{buttonText}</button>
+  }else if (buttonText === 'Sign Up'){
+    return  <button className='signup-modal-button-class' onClick={onClick}>{buttonText}</button>
+  }else{
+    return (
+      <button className='open-modal-button-class' onClick={onClick}>{buttonText}</button>
+    );
+  }
 }
 
 export default OpenModalButton;
