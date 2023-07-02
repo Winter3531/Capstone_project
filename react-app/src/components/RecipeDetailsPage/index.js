@@ -42,12 +42,12 @@ export default function RecipeDetails() {
         const min = data % 60
         const hr = (data - min) / 60
         if (min === 0) {
-            return `${hr}:00`
+            if (hr < 2){
+                return `${hr} hour`
+            }else {
+                return `${hr} hours`
+            }
         }
-        if (min < 10) {
-            return `${hr}:0${min}`
-        }
-
         if (hr < 2) {
             return `${hr} hour ${min} minutes`
         } else {

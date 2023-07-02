@@ -8,7 +8,6 @@ ingredient_routes = Blueprint('ingredients', __name__)
 
 # ROUTE TO GET INGREDIENTS FOR A RECIPE
 @ingredient_routes.route('/<int:recipe_id>')
-@login_required
 def get_ingredients(recipe_id):
     ingredients = Ingredient.query.filter(Ingredient.recipe_id == recipe_id)
 
