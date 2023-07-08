@@ -27,7 +27,7 @@ class User(db.Model, UserMixin):
     user_follows = db.relationship(
         'Like',
         lazy=True,
-        primaryjoin='and_(Like.likeable_type=="user", foreign(Like.likeable_id)==User.id)',
+        primaryjoin='and_(Like.likeable_type=="user", foreign(Like.owner_id)==User.id)',
         back_populates='follow_user'
     )
 
@@ -49,5 +49,6 @@ class User(db.Model, UserMixin):
             'last_name': self.last_name,
             'username': self.username,
             'email': self.email,
-            'user_image': self.user_image
+            'user_image': self.user_image,
+            'following': [user.like_to_dict() for user in self.user_follows] if self.user_follows else [],
         }

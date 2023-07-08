@@ -19,6 +19,13 @@ class Recipe(db.Model, UserMixin):
 
     comments = db.relationship('Comment', back_populates='recipe', cascade="all, delete-orphan")
 
+    recipe_likes = db.relationship(
+        'Like',
+        lazy=True,
+        primaryjoin='and_(Like.likeable_type=="recipe", foreign(Like.likeable_id)==Recipe.id)',
+        back_populates='like_recipe'
+    )
+
     recipe_instruction = db.relationship(
         'Instruction',
         back_populates='instruction_recipe',
@@ -49,4 +56,5 @@ class Recipe(db.Model, UserMixin):
             'preperation_time': self.preperation_time ,
             'notes': self.notes ,
             'images': [img.image_to_dict() for img in self.image] if self.image else [],
+            'likes': [like.like_to_dict() for like in self.recipe_likes] if self.recipe_likes else [],
         }
