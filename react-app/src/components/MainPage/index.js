@@ -3,17 +3,70 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from "react-router-dom";
 
 import { allRecipesThunk } from '../../store/recipe';
+import { deleteLikeThunk, getLikesThunk, newLikeThunk } from '../../store/like';
 
 import './CollectionPage.css'
 
-export default function CollectionPage(){
+export default function CollectionPage() {
 
     const dispatch = useDispatch()
-    const recipes = useSelector(state=>state?.recipes)
+    const sessionUser = useSelector(state => state?.session?.user)
+    const recipes = useSelector(state => state?.recipes)
+    const likes = useSelector(state => state?.likes)
+
+    const userLikesArr = []
+    Object.values(likes).map(like => {
+        userLikesArr.push(like.likeable_id)
+    })
 
     useEffect(() => {
         dispatch(allRecipesThunk())
+        dispatch(getLikesThunk(sessionUser?.id))
     }, [dispatch])
+
+    const likefunction = (id) => {
+        if (Object.values(likes).length) {
+            for (let like of Object.values(likes)) {
+                if (like.likeable_id == id) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    const setLikeTrue = async (e) => {
+        e.preventDefault();
+        if(userLikesArr.includes(Number(e.currentTarget.getAttribute("data-value")))){
+            console.log('ALREADY LIKED')
+            return
+        }
+        const newLike = {
+            likeable_type: 'recipe',
+            likeable_id: e.currentTarget.getAttribute("data-value"),
+            owner_id: sessionUser.id
+        }
+        console.log(newLike)
+        dispatch(newLikeThunk(newLike))
+        dispatch(allRecipesThunk())
+    }
+
+    const setLikeFalse = async (e) => {
+        e.preventDefault();
+        let likeId = null
+        Object.values(likes).map(like => {
+            if(like.likeable_id == e.currentTarget.getAttribute("data-value")){
+                likeId = like.id
+            }
+        })
+        const deleteLike = {
+            likeable_type: 'recipe',
+            likeable_id: e.currentTarget.getAttribute("data-value"),
+            owner_id: sessionUser.id
+        }
+        dispatch(deleteLikeThunk(likeId))
+        dispatch(allRecipesThunk())
+    }
 
     return (
         <div className='full-page'>
@@ -27,14 +80,26 @@ export default function CollectionPage(){
                         <div key={`recipe-${recipe.id}`} className='recipe-card'>
                             <NavLink exact to={`/recipes/${recipe.id}`} >
                                 {Object.values(recipe.images).map((img, i) => {
-                                    if(img.preview === true){
+                                    if (img.preview === true) {
                                         return (
-                                            <img key={i} className='card-image' alt={`preview-${img.id}`} src={img.image}  />
-                                            )
-                                        }
-                                    })}
-                                    <h3 className='recipe-card-title' >{recipe.recipe_title}</h3>
-                                </NavLink>
+                                            <img key={i} className='card-image' alt={`preview-${img.id}`} src={img.image} />
+                                        )
+                                    }
+                                })}
+                                <div className='recipe-card-info-div'>
+                                    <div className='recipe-card-info-left'>
+                                        <h3 className='recipe-card-title' >{recipe.recipe_title}</h3>
+                                    </div>
+                                    <div className='recipe-card-info-right'>
+                                        {likefunction(recipe.id) ? (
+                                            <button data-value={recipe.id} className='colored-like-button' onClick={setLikeFalse} >HEART</button>
+                                        ) : (
+                                            <button data-value={recipe.id} className='outlined-like-button' onClick={setLikeTrue} >HEART</button>
+                                        )}
+                                        <h3>Likes {recipe.likes}</h3>
+                                    </div>
+                                </div>
+                            </NavLink>
                         </div>
                     )
                 })}

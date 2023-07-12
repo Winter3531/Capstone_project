@@ -54,3 +54,11 @@
     width: 500px;
     height: 400px;
 }
+
+.colored-like-button {
+    background-color: red;
+}
+
+.outlined-like-button:hover {
+    border: solid 2px red;
+}

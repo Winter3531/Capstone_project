@@ -56,5 +56,5 @@ class Recipe(db.Model, UserMixin):
             'preperation_time': self.preperation_time ,
             'notes': self.notes ,
             'images': [img.image_to_dict() for img in self.image] if self.image else [],
-            'likes': [like.like_to_dict() for like in self.recipe_likes] if self.recipe_likes else [],
+            'likes': len(self.recipe_likes),
         }
