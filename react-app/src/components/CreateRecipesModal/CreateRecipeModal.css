@@ -9,7 +9,7 @@
     border: solid 1px teal;
     border-radius: 8px;
     box-shadow: 10px 10px 300px teal;
-    color: teal;
+    /* color: teal; */
 }
 
 .edit-button {
@@ -30,7 +30,7 @@ hr {
     text-decoration: solid;
     font-family: sans-serif;
     font-size: 60px;
-    color: teal;
+    /* color: teal; */
 }
 
 .recipe-details-form {

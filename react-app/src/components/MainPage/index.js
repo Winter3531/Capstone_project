@@ -6,6 +6,7 @@ import { allRecipesThunk } from '../../store/recipe';
 import { deleteLikeThunk, getLikesThunk, newLikeThunk } from '../../store/like';
 
 import './CollectionPage.css'
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 export default function CollectionPage() {
 
@@ -13,11 +14,6 @@ export default function CollectionPage() {
     const sessionUser = useSelector(state => state?.session?.user)
     const recipes = useSelector(state => state?.recipes)
     const likes = useSelector(state => state?.likes)
-
-    const userLikesArr = []
-    Object.values(likes).map(like => {
-        userLikesArr.push(like.likeable_id)
-    })
 
     useEffect(() => {
         dispatch(allRecipesThunk())
@@ -37,10 +33,6 @@ export default function CollectionPage() {
 
     const setLikeTrue = async (e) => {
         e.preventDefault();
-        if(userLikesArr.includes(Number(e.currentTarget.getAttribute("data-value")))){
-            console.log('ALREADY LIKED')
-            return
-        }
         const newLike = {
             likeable_type: 'recipe',
             likeable_id: e.currentTarget.getAttribute("data-value"),
@@ -48,24 +40,19 @@ export default function CollectionPage() {
         }
         console.log(newLike)
         dispatch(newLikeThunk(newLike))
-        dispatch(allRecipesThunk())
+        await dispatch(allRecipesThunk())
     }
 
     const setLikeFalse = async (e) => {
         e.preventDefault();
         let likeId = null
         Object.values(likes).map(like => {
-            if(like.likeable_id == e.currentTarget.getAttribute("data-value")){
+            if (like.likeable_id == e.currentTarget.getAttribute("data-value")) {
                 likeId = like.id
             }
         })
-        const deleteLike = {
-            likeable_type: 'recipe',
-            likeable_id: e.currentTarget.getAttribute("data-value"),
-            owner_id: sessionUser.id
-        }
         dispatch(deleteLikeThunk(likeId))
-        dispatch(allRecipesThunk())
+        await dispatch(allRecipesThunk())
     }
 
     return (
@@ -91,12 +78,16 @@ export default function CollectionPage() {
                                         <h3 className='recipe-card-title' >{recipe.recipe_title}</h3>
                                     </div>
                                     <div className='recipe-card-info-right'>
-                                        {likefunction(recipe.id) ? (
-                                            <button data-value={recipe.id} className='colored-like-button' onClick={setLikeFalse} >HEART</button>
-                                        ) : (
-                                            <button data-value={recipe.id} className='outlined-like-button' onClick={setLikeTrue} >HEART</button>
+                                        <h3 id='card-like-counter' >Likes {recipe.likes}</h3>
+                                        {sessionUser && (
+                                            <div>
+                                                {likefunction(recipe.id) ? (
+                                                    <FaHeart data-value={recipe.id} className='colored-like-button' onClick={setLikeFalse} />
+                                                ) : (
+                                                    <FaRegHeart data-value={recipe.id} className='outlined-like-button' onClick={setLikeTrue} />
+                                                )}
+                                            </div>
                                         )}
-                                        <h3>Likes {recipe.likes}</h3>
                                     </div>
                                 </div>
                             </NavLink>

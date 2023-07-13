@@ -55,10 +55,52 @@
     height: 400px;
 }
 
-.colored-like-button {
-    background-color: red;
+.recipe-card-info-div {
+    display: flex;
 }
 
+.recipe-card-info-left {
+    width: 50%;
+}
+
+.recipe-card-title {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.recipe-card-info-right {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.colored-like-button {
+    color: red;
+    font-size: x-large;
+    margin-left: 10px;
+    margin-right: 10px;
+    /* height: 6%;
+    width: 6%; */
+}
+
+.colored-like-button:hover {
+    color: darkred;
+}
+
+.outlined-like-button {
+    color: red;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: x-large;
+    /* height: 6%;
+    width: 6%; */
+}
 .outlined-like-button:hover {
-    border: solid 2px red;
+    color: darkred;
+}
+
+#card-like-counter {
+    margin-left: 10px;
+    margin-right: 10px;
 }
