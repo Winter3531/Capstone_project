@@ -23,7 +23,8 @@ class Recipe(db.Model, UserMixin):
         'Like',
         lazy=True,
         primaryjoin='and_(Like.likeable_type=="recipe", foreign(Like.likeable_id)==Recipe.id)',
-        back_populates='like_recipe'
+        back_populates='like_recipe',
+        cascade="all, delete-orphan"
     )
 
     recipe_instruction = db.relationship(
