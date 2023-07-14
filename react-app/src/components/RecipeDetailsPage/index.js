@@ -77,7 +77,7 @@ export default function RecipeDetails() {
             owner_id: sessionUser.id
         }
         console.log(newLike)
-        dispatch(newLikeThunk(newLike))
+        await dispatch(newLikeThunk(newLike))
         await dispatch(allRecipesThunk())
     }
 
@@ -89,7 +89,7 @@ export default function RecipeDetails() {
                 likeId = like.id
             }
         })
-        dispatch(deleteLikeThunk(likeId))
+        await dispatch(deleteLikeThunk(likeId))
         await dispatch(allRecipesThunk())
     }
 
