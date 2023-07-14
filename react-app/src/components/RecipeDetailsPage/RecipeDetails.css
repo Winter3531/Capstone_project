@@ -46,6 +46,18 @@
     margin: 5px;
 }
 
+#recipe-details-likes-count {
+    font-weight: lighter;
+    margin: 5px;
+}
+
+.details-like-div {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 80px;
+    margin-bottom: 5px;
+}
+
 .edit-delete-buttons {
     align-self: flex-end;
     margin-right: 50px;
