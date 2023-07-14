@@ -12,6 +12,7 @@ from .api.ingredient_routes import ingredient_routes
 from .api.comment_routes import comment_routes
 from .api.instruction_routes import instruction_routes
 from .api.image_routes import image_routes
+from .api.like_routes import like_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -38,6 +39,7 @@ app.register_blueprint(ingredient_routes, url_prefix='/api/ingredients')
 app.register_blueprint(instruction_routes, url_prefix='/api/instructions')
 app.register_blueprint(comment_routes, url_prefix='/api/comments')
 app.register_blueprint(image_routes, url_prefix='/api/images')
+app.register_blueprint(like_routes, url_prefix='/api/likes')
 db.init_app(app)
 Migrate(app, db)
 
