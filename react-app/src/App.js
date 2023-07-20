@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import CollectionPage from "./components/MainPage";
+import UserCollectionPage from "./components/MainPage/UserCollectionPage";
 import CreateRecipeModal from "./components/CreateRecipesModal";
 import RecipeDetails from "./components/RecipeDetailsPage";
 import UpdateRecipePage from "./components/UpdateRecipePage";
@@ -21,6 +22,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route path='/collection/:userId'>
+            <UserCollectionPage />
+          </Route>
           <Route path='/collection'>
             <CollectionPage />
           </Route>

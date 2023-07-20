@@ -42,5 +42,5 @@ def get_user_follows(user_id):
     follows = Like.query.filter(Like.owner_id == user_id, Like.likeable_type == 'user').all()
 
     if follows:
-        return {follow.id: follow.like_to_dict() for follow in follows } if follows else []
+        return {follow.id: follow.follow_to_dict() for follow in follows } if follows else []
     return "No Follows"

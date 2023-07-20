@@ -26,3 +26,11 @@ class Like(db.Model, UserMixin):
             'likeable_id': self.likeable_id,
             'owner_id': self.owner_id
         }
+
+    def follow_to_dict(self):
+        return {
+            'id': self.id,
+            'likeable_type': self.likeable_type,
+            'likeable_id': self.likeable_id,
+            'username': self.follow_user.username
+        }
