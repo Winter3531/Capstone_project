@@ -23,7 +23,6 @@ export default function EditCommentModal ({commentId, recipeId}) {
             'recipe_id': recipeId,
             'comment': comment,
         };
-        console.log(image)
         await dispatch(editCommentThunk(commentId, commentData, imageId, image));
         setComment('');
         closeModal();

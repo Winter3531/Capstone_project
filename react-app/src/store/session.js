@@ -1,6 +1,7 @@
 // constants
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
+const COLLECTION_USER = "session/COLLECTION_USER"
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -10,6 +11,11 @@ const setUser = (user) => ({
 const removeUser = () => ({
 	type: REMOVE_USER,
 });
+
+const setCollectionUser = (collectionUser) => ({
+	type: COLLECTION_USER,
+	payload: collectionUser
+})
 
 const initialState = { user: null };
 
@@ -100,12 +106,31 @@ export const signUp = (firstName, lastName, username, email, password, userImage
 	}
 };
 
+export const collectionUserThunk = (userId) => async (dispatch) => {
+	const response = await fetch(`/api/users/${userId}`, {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+
+	if (response.ok){
+		const collectionUser = await response.json();
+		dispatch(setCollectionUser(collectionUser));
+		return collectionUser
+	}
+}
+
 export default function sessionReducer(state = initialState, action) {
 	switch (action.type) {
 		case SET_USER:
 			return { user: action.payload };
 		case REMOVE_USER:
-			return { user: null };
+			let newState = {...state}
+			delete newState.user
+			newState.user = null
+			return newState
+		case COLLECTION_USER:
+			return {...state, collectionUser: action.payload}
 		default:
 			return state;
 	}

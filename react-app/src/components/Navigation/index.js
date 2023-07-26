@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
@@ -6,21 +6,38 @@ import { FaHome } from 'react-icons/fa';
 
 import './Navigation.css';
 import { getFollowsThunk } from '../../store/follow';
-import { Redirect } from "react-router-dom";
+import { collectionUserThunk } from '../../store/session';
 
 function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state?.session?.user);
 	const follows = useSelector(state => state?.follows)
+	const likes = useSelector(state => state?.likes)
+	const [showFollow, setShowFollow] = useState(false)
+	const [showLike, setShowLike] = useState(false)
 	const dispatch = useDispatch();
 
-	const selectUser = async (e) => {
+
+	const setFollowMenu = async (e) => {
 		e.preventDefault()
-		console.log('HERE')
+		if (showFollow) {
+			return setShowFollow(false);
+		}
+		return setShowFollow(true)
+	}
+
+	const setLikesMenu = async (e) => {
+		e.preventDefault()
+		if (showLike) {
+			return setShowLike(false);
+		}
+		return setShowLike(true)
 	}
 
 	useEffect(() => {
-		dispatch(getFollowsThunk(sessionUser?.id))
-	}, [dispatch, isLoaded])
+		if (sessionUser !== null) {
+			dispatch(getFollowsThunk(sessionUser?.id))
+		}
+	}, [isLoaded, showFollow, showLike, sessionUser])
 
 	return (
 		<div>
@@ -32,14 +49,42 @@ function Navigation({ isLoaded }) {
 					</div>
 				)}
 			</div>
-			<select className='follow-users-dropdown' >
-				<option default >Followed Users</option>
-				{Object.values(follows).map(follow => {
-					return (
-						<option onSelect={selectUser}>{follow.username}</option>
-					)
-				})}
-			</select>
+			{sessionUser !== null ? (
+				<>
+					{showFollow ? (
+						<div>
+							<button className='all-followed-users-button' onClick={setFollowMenu}>Followed Users</button>
+							<div className='all-followed-users-div' >
+								{Object.values(follows).map(follow => {
+									return (
+										<NavLink className="followed-user-entry" key={`followed-user-${follow.id}`} onClick={e => dispatch(collectionUserThunk(follow.likeable_id))} exact to={`/collection/${follow.likeable_id}`}>{follow.username}</NavLink>
+									)
+								})}
+							</div>
+
+						</div>
+					) : (
+						<button className='all-followed-users-button' onClick={setFollowMenu}>Followed Users</button>
+					)}
+					{showLike ? (
+						<div>
+							<button className='all-liked-recipes-button' onClick={setLikesMenu}>Liked Recipes</button>
+							<div className='all-liked-recipes-div' >
+								{Object.values(likes).map(like => {
+									return (
+										<NavLink className="liked-recipe-entry" key={`liked-recipe-${like.id}`} exact to={`/recipes/${like.likeable_id}`}>{like.recipe}</NavLink>
+									)
+								})}
+							</div>
+						</div>
+					) : (
+						<button className='all-liked-recipes-button' onClick={setLikesMenu}>Liked Recipes</button>
+					)}
+				</>
+			) : (
+				<>
+				</>
+			)}
 		</div>
 	);
 }

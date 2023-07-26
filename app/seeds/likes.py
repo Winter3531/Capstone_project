@@ -33,10 +33,15 @@ def seed_likes():
         likeable_id = 3,
         owner_id = 2
     )
-    like_g = Like(
+    # like_g = Like(
+    #     likeable_type = 'user',
+    #     likeable_id = 1,
+    #     owner_id = 2
+    # )
+    like_h = Like(
         likeable_type = 'user',
         likeable_id = 1,
-        owner_id = 2
+        owner_id = 3
     )
     db.session.add(like_a)
     db.session.add(like_b)
@@ -44,7 +49,8 @@ def seed_likes():
     db.session.add(like_d)
     db.session.add(like_e)
     db.session.add(like_f)
-    db.session.add(like_g)
+    # db.session.add(like_g)
+    db.session.add(like_h)
     db.session.commit()
 
 def undo_likes():

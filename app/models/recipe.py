@@ -1,5 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from flask_login import UserMixin
+from flask import json
 
 
 class Recipe(db.Model, UserMixin):
@@ -52,10 +53,16 @@ class Recipe(db.Model, UserMixin):
         return {
             'id': self.id ,
             'owner_id': self.owner_id ,
+            'owner_data': self.owners.user_info_dict(),
             'recipe_type': self.recipe_type ,
             'recipe_title': self.recipe_title ,
             'preperation_time': self.preperation_time ,
             'notes': self.notes ,
             'images': [img.image_to_dict() for img in self.image] if self.image else [],
             'likes': len(self.recipe_likes),
+        }
+
+    def recipe_title_to_dict(self):
+        return {
+            'recipe_title': self.recipe_title
         }

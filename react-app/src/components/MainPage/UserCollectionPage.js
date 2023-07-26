@@ -8,6 +8,8 @@ import { deleteLikeThunk, getLikesThunk, newLikeThunk } from '../../store/like';
 import './CollectionPage.css'
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { collectionUserThunk } from '../../store/session';
+import { deleteFollowThunk, newFollowThunk, getFollowsThunk } from '../../store/follow';
 
 export default function UserCollectionPage() {
 
@@ -16,10 +18,15 @@ export default function UserCollectionPage() {
     const sessionUser = useSelector(state => state?.session?.user)
     const recipes = useSelector(state => state?.recipes)
     const likes = useSelector(state => state?.likes)
+    const follows = useSelector(state => state?.follows)
+    const collectionUser = useSelector(state => state?.session?.collectionUser)
 
     useEffect(() => {
         dispatch(allRecipesThunk())
-        dispatch(getLikesThunk(sessionUser?.id))
+        dispatch(collectionUserThunk(userId))
+        if (sessionUser !== null) {
+            dispatch(getLikesThunk(sessionUser?.id))
+        }
     }, [dispatch])
 
     const likefunction = (id) => {
@@ -33,6 +40,17 @@ export default function UserCollectionPage() {
         return false
     }
 
+    const followFunction = (id) => {
+        if (Object.values(follows).length) {
+            for (let follow of Object.values(follows)) {
+                if (follow.likeable_id == id) {
+                    return true;
+                }
+            }
+        }
+        return false
+    }
+
     const setLikeTrue = async (e) => {
         e.preventDefault();
         const newLike = {
@@ -40,7 +58,6 @@ export default function UserCollectionPage() {
             likeable_id: e.currentTarget.getAttribute("data-value"),
             owner_id: sessionUser.id
         }
-        console.log(newLike)
         await dispatch(newLikeThunk(newLike))
         await dispatch(allRecipesThunk())
     }
@@ -57,15 +74,54 @@ export default function UserCollectionPage() {
         await dispatch(allRecipesThunk())
     }
 
+    const followUser = async (e) => {
+        e.preventDefault()
+        const newFollow = {
+            likeable_type: 'user',
+            likeable_id: userId,
+            owner_id: sessionUser.id
+        }
+        await dispatch(newFollowThunk(newFollow))
+        await dispatch(getFollowsThunk(sessionUser?.id))
+    }
+
+    const unfollowUser = async (e) => {
+        e.preventDefault()
+        let followId = null
+        Object.values(follows).map(follow => {
+            if (follow.likeable_id == userId) {
+                followId = follow.id
+            }
+        })
+        await dispatch(deleteFollowThunk(followId))
+        await dispatch(getFollowsThunk(sessionUser?.id))
+    }
+
     return (
         <div className='full-page'>
-            <div className='header' >
-                <img alt='cornocopia-title' id='title-image' src='https://res.cloudinary.com/dtcuw5i2e/image/upload/v1684713743/cornucopia_p2li2c.png' />
-                <h1 id='g-and-g-header'>Game and Greens</h1>
+            <div className='collection-user-header' >
+                <img alt='user-image' className='collection-user-image' src={collectionUser?.user_image} />
+                <div className='colection-user-content-div' >
+                    <h1 className='user-page-title'>{collectionUser?.username}</h1>
+                    {sessionUser.id == userId ? (
+                        <div className='user-profile-page-data' >
+                            <h3>{sessionUser?.email}</h3>
+                            <h3>{sessionUser?.first_name} {sessionUser?.last_name}</h3>
+                        </div>
+                    ) : (
+                        <>
+                            {followFunction(userId) ? (
+                                <button className="folow-user-button" onClick={unfollowUser} >Unfollow</button>
+                            ) : (
+                                <button className="folow-user-button" onClick={followUser} >Follow</button>
+                            )}
+                        </>
+                    )}
+                </div>
             </div>
             <div className='recipe-card-layout'>
                 {Object.values(recipes).map(recipe => {
-                    if(recipe.owner_id == userId){
+                    if (recipe.owner_id == userId) {
                         return (
                             <div key={`recipe-${recipe.id}`} className='recipe-card'>
                                 <NavLink exact to={`/recipes/${recipe.id}`} >

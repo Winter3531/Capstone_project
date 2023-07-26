@@ -27,7 +27,7 @@ class User(db.Model, UserMixin):
     user_follows = db.relationship(
         'Like',
         lazy=True,
-        primaryjoin='and_(Like.likeable_type=="user", foreign(Like.owner_id)==User.id)',
+        primaryjoin='and_(Like.likeable_type=="user", foreign(Like.likeable_id)==User.id)',
         back_populates='follow_user'
     )
 
@@ -43,6 +43,7 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def to_dict(self):
+        print(self, "$$$$$$$$$$$$$$$$$$$$$$$$$$$")
         return {
             'id': self.id,
             'first_name': self.first_name,
@@ -50,5 +51,12 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email,
             'user_image': self.user_image,
-            'following': [user.like_to_dict() for user in self.user_follows] if self.user_follows else [],
+        }
+
+    def user_info_dict(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'user_image': self.user_image,
         }
