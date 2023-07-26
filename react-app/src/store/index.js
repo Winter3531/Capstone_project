@@ -6,6 +6,7 @@ import ingredientsReducer from './ingredient';
 import commentsReducer from './comment';
 import instructionsReducer from './instruction';
 import likesReducer from './like';
+import followsReducer from './follow';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   instructions: instructionsReducer,
   comments: commentsReducer,
   likes: likesReducer,
+  follows: followsReducer,
 });
 
 

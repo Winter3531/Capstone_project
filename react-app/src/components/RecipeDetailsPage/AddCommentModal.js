@@ -48,7 +48,6 @@ export default function AddCommentModal ({recipe_id}) {
                     onChange={(e => setImage(e.target.value))}
                     placeholder="Image"
                     id='comment-image-input'
-                    required
                 />
                 <button type="submit" id="comment-submit" >Submit</button>
             </form>

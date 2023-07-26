@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { NavLink } from 'react-router-dom';
 
 import { allRecipesThunk } from '../../store/recipe';
 import { getAllCommentsThunk } from '../../store/comment';
@@ -32,7 +33,9 @@ export default function RecipeDetails() {
         dispatch(getAllCommentsThunk(recipeId))
         dispatch(getIngredientThunk(recipeId))
         dispatch(getInstructionThunk(recipeId))
-        dispatch(getLikesThunk(sessionUser?.id))
+        if (sessionUser !== null){
+            dispatch(getLikesThunk(sessionUser?.id))
+        }
     }, [dispatch])
 
     const previewImg = recipe?.images.filter(img => {
@@ -76,7 +79,6 @@ export default function RecipeDetails() {
             likeable_id: e.currentTarget.getAttribute("data-value"),
             owner_id: sessionUser.id
         }
-        console.log(newLike)
         await dispatch(newLikeThunk(newLike))
         await dispatch(allRecipesThunk())
     }
@@ -106,7 +108,7 @@ export default function RecipeDetails() {
                         <img src={previewImg[0]?.image} alt='recipe-image' id="details-preview-image" />
                         <h2 id='recipe-details-title'>{recipe.recipe_title}</h2>
                         <div className='recipe-details-type-time'>
-                            <h3 id='recipe-details-type'>{recipe.recipe_type.toUpperCase()}</h3>
+                            <h3 id='recipe-details-type'><NavLink exact to={`/collection/${recipe.owner_id}`}>{recipe.owner_data.username}</NavLink> · {recipe.recipe_type.toUpperCase()}</h3>
                             <h3 id='recipe-details-time'>{recipeLengthFunc(recipe.preperation_time)}</h3>
                             <h3 id='recipe-details-likes-count'>Likes {recipe.likes}</h3>
                         </div>

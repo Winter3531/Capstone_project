@@ -1,3 +1,15 @@
+.profile-dropdown {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: solid 2px #ffd700;
+    border-radius: 8px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
 .profile-button-layout {
     display: flex;
     flex-direction: column;
@@ -13,16 +25,25 @@
 }
 
 #create-recipe-button {
+    margin: 5px;
     border: solid 1px grey;
     border-radius: 8px;
     background-color: #ffd700;
-    padding: 2px;
     text-align: center;
 }
 
 #logout-button {
+    margin: 5px;
     border: solid 1px grey;
     border-radius: 8px;
     background-color: #ffd700;
-    padding: 2px;
+}
+
+#user-profile-page-button {
+    margin: 5px;
+    border: solid 1px grey;
+    border-radius: 8px;
+    background-color: #ffd700;
+    text-align: center;
+    width: 90%;
 }

@@ -20,3 +20,44 @@
 #nav-bar-profile-div {
   margin: 20px;
 }
+
+.all-followed-users-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.followed-user-entry {
+  width: 75%;
+  background-color: white;
+  border: solid 1px #ffd700;
+  border-radius: 8px;
+  padding-left: 10px;
+}
+
+.all-followed-users-button {
+  background-color: white;
+  border: solid 1px #ffd700;
+  width: 81%;
+  border-radius: 8px;
+}
+
+.all-liked-recipes-button {
+  margin-top: 20px;
+  background-color: white;
+  border: solid 1px #ffd700;
+  width: 81%;
+  border-radius: 8px;
+}
+
+.all-liked-recipes-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.liked-recipe-entry {
+  width: 75%;
+  background-color: white;
+  border: solid 1px #ffd700;
+  border-radius: 8px;
+  padding-left: 10px;
+}
