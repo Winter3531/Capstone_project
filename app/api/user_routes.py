@@ -17,18 +17,19 @@ def users():
 
 
 @user_routes.route('/<int:id>')
-@login_required
+# @login_required
 def user(id):
     """
     Query for a user by id and returns that user in a dictionary
     """
     user = User.query.get(id)
-    return user.to_dict()
+    return user.user_info_dict()
 
 # ROUTE TO GET ALL LIKES BY USER ID
 @user_routes.route('<int:user_id>/likes')
 @login_required
 def get_user_likes(user_id):
+
     likes = Like.query.filter(Like.owner_id == user_id, Like.likeable_type == 'recipe').all()
 
     if likes:
@@ -42,5 +43,11 @@ def get_user_follows(user_id):
     follows = Like.query.filter(Like.owner_id == user_id, Like.likeable_type == 'user').all()
 
     if follows:
-        return {follow.id: follow.like_to_dict() for follow in follows } if follows else []
-    return "No Follows"
+        return {follow.id: follow.follow_to_dict() for follow in follows } if follows else []
+    return []
+
+# # ROUTE TO GET ALL USER RECIPES FOR USER COLLECTION PAGE
+# @user_routes.route('/<int:user_id>/collection')
+# # @login_required
+# def get_user_collection():
+#     user_recipes =

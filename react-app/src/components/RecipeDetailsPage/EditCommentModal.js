@@ -23,10 +23,9 @@ export default function EditCommentModal ({commentId, recipeId}) {
             'recipe_id': recipeId,
             'comment': comment,
         };
-        dispatch(editCommentThunk(commentId, commentData, imageId, image));
+        await dispatch(editCommentThunk(commentId, commentData, imageId, image));
         setComment('');
         closeModal();
-        // dispatch(getAllCommentsThunk(recipe_id));
     }
 
     return (
@@ -48,7 +47,6 @@ export default function EditCommentModal ({commentId, recipeId}) {
                     onChange={(e => setImage(e.target.value))}
                     placeholder="Image"
                     id='comment-image-input'
-                    required
                 />
                 <button type="submit" id="comment-submit" >Submit</button>
             </form>

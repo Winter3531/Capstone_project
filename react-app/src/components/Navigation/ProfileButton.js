@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
@@ -48,8 +48,9 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <div className="profile-button-layout">
-            <li>{user.username}</li>
-            <li>{user.email}</li>
+            {/* <li>{user.username}</li>
+            <li>{user.email}</li> */}
+            <NavLink exact to={`/collection/${user.id}`}><button id='user-profile-page-button'>Profile Page</button></NavLink>
             <button id="logout-button" onClick={handleLogout}>Log Out</button>
             <NavLink exact to="/new-recipe"><button id="create-recipe-button">Create Recipe</button></NavLink>
           </div>

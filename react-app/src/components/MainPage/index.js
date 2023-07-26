@@ -18,7 +18,9 @@ export default function CollectionPage() {
     useEffect(() => {
         dispatch(allRecipesThunk())
         dispatch(getLikesThunk(sessionUser?.id))
-    }, [dispatch])
+        if (sessionUser !== null){
+        }
+    }, [dispatch, sessionUser])
 
     const likefunction = (id) => {
         if (Object.values(likes).length) {
@@ -38,7 +40,6 @@ export default function CollectionPage() {
             likeable_id: e.currentTarget.getAttribute("data-value"),
             owner_id: sessionUser.id
         }
-        console.log(newLike)
         await dispatch(newLikeThunk(newLike))
         await dispatch(allRecipesThunk())
     }

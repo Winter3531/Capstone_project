@@ -104,3 +104,38 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+
+/* ****************************************** */
+
+.collection-user-image {
+    margin-top: 20px;
+    margin-left: 128px;
+    border: 10px solid #FFD700;
+    height: 170px;
+    width: 170px;
+}
+
+.collection-user-header {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.colection-user-content-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-page-title {
+    margin-left: 40px;
+    margin-top: 40px;
+}
+
+.folow-user-button {
+    width: 90px;
+    margin-left: 40px;
+}
+
+.user-profile-page-data {
+    margin-left: 40px;
+}

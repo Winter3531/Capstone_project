@@ -32,7 +32,10 @@ def add_like():
         )
         db.session.add(new_like)
         db.session.commit()
-        return new_like.like_to_dict()
+        if new_like.likeable_type == 'recipe':
+            return new_like.like_to_dict()
+        else :
+            return new_like.follow_to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 # ROUTE TO REMOVE A LIKE
@@ -44,6 +47,9 @@ def delete_like(like_id):
     if like:
         db.session.delete(like)
         db.session.commit()
-        return like.like_to_dict()
+        if like.likeable_type == 'recipe':
+            return like.like_to_dict()
+        else :
+            return like.follow_to_dict()
 
     return "Like Not Found"
