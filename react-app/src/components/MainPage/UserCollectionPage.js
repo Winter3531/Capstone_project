@@ -103,17 +103,23 @@ export default function UserCollectionPage() {
                 <img alt='user-image' className='collection-user-image' src={collectionUser?.user_image} />
                 <div className='colection-user-content-div' >
                     <h1 className='user-page-title'>{collectionUser?.username}</h1>
-                    {sessionUser.id == userId ? (
+                    {sessionUser?.id == userId ? (
                         <div className='user-profile-page-data' >
                             <h3>{sessionUser?.email}</h3>
                             <h3>{sessionUser?.first_name} {sessionUser?.last_name}</h3>
                         </div>
                     ) : (
                         <>
-                            {followFunction(userId) ? (
-                                <button className="folow-user-button" onClick={unfollowUser} >Unfollow</button>
+                            {sessionUser !== null ? (
+                                <>
+                                    {followFunction(userId) ? (
+                                        <button className="folow-user-button" onClick={unfollowUser} >Unfollow</button>
+                                    ) : (
+                                        <button className="folow-user-button" onClick={followUser} >Follow</button>
+                                    )}
+                                </>
                             ) : (
-                                <button className="folow-user-button" onClick={followUser} >Follow</button>
+                                <></>
                             )}
                         </>
                     )}
