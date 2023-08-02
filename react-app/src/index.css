@@ -11,6 +11,13 @@ body {
     display: flex;
 }
 
+footer {
+    display: flex;
+}
+#about-dev {
+    margin: 20px;
+}
+
 a:link,
 a:visited {
     color: black;
