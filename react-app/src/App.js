@@ -22,6 +22,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route path='/'>
+            <CollectionPage />
+          </Route>
           <Route path='/collection/:userId'>
             <UserCollectionPage />
           </Route>
