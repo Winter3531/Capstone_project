@@ -99,32 +99,61 @@ export default function UserCollectionPage() {
 
     return (
         <div className='full-page'>
-            <div className='collection-user-header' >
-                <img alt='user-image' className='collection-user-image' src={collectionUser?.user_image} />
-                <div className='colection-user-content-div' >
-                    <h1 className='user-page-title'>{collectionUser?.username}</h1>
-                    {sessionUser?.id == userId ? (
-                        <div className='user-profile-page-data' >
-                            <h3>{sessionUser?.email}</h3>
-                            <h3>{sessionUser?.first_name} {sessionUser?.last_name}</h3>
-                        </div>
-                    ) : (
-                        <>
-                            {sessionUser !== null ? (
-                                <>
-                                    {followFunction(userId) ? (
-                                        <button className="folow-user-button" onClick={unfollowUser} >Unfollow</button>
-                                    ) : (
-                                        <button className="folow-user-button" onClick={followUser} >Follow</button>
-                                    )}
-                                </>
-                            ) : (
-                                <></>
-                            )}
-                        </>
-                    )}
+            {sessionUser?.id == userId ? (
+                <div className='collection-user-header' >
+                    <img alt='user-image' className='collection-user-image' src={sessionUser?.user_image} />
+                    <div className='colection-user-content-div' >
+                        <h1 className='user-page-title'>{sessionUser?.username}</h1>
+                        {sessionUser?.id == userId ? (
+                            <div className='user-profile-page-data' >
+                                <h3 className='user-data-class' >{sessionUser?.email}</h3>
+                                <h3 className='user-data-class' >{sessionUser?.first_name} {sessionUser?.last_name}</h3>
+                            </div>
+                        ) : (
+                            <>
+                                {sessionUser !== null ? (
+                                    <>
+                                        {followFunction(userId) ? (
+                                            <button className="follow-user-button" onClick={unfollowUser} >Unfollow</button>
+                                        ) : (
+                                            <button className="follow-user-button" onClick={followUser} >Follow</button>
+                                        )}
+                                    </>
+                                ) : (
+                                    <></>
+                                )}
+                            </>
+                        )}
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <div className='collection-user-header' >
+                    <img alt='user-image' className='collection-user-image' src={collectionUser?.user_image} />
+                    <div className='colection-user-content-div' >
+                        <h1 className='user-page-title'>{collectionUser?.username}</h1>
+                        {sessionUser?.id == userId ? (
+                            <div className='user-profile-page-data' >
+                                <h3 className='user-data-class' >{sessionUser?.email}</h3>
+                                <h3 className='user-data-class' >{sessionUser?.first_name} {sessionUser?.last_name}</h3>
+                            </div>
+                        ) : (
+                            <>
+                                {sessionUser !== null ? (
+                                    <>
+                                        {followFunction(userId) ? (
+                                            <button className="follow-user-button" onClick={unfollowUser} >Unfollow</button>
+                                        ) : (
+                                            <button className="follow-user-button" onClick={followUser} >Follow</button>
+                                        )}
+                                    </>
+                                ) : (
+                                    <></>
+                                )}
+                            </>
+                        )}
+                    </div>
+                </div>
+            )}
             <div className='recipe-card-layout'>
                 {Object.values(recipes).map(recipe => {
                     if (recipe.owner_id == userId) {

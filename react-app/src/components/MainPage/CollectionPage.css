@@ -124,6 +124,7 @@
 .colection-user-content-div {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .user-page-title {
@@ -131,11 +132,24 @@
     margin-top: 40px;
 }
 
-.folow-user-button {
-    width: 90px;
-    margin-left: 40px;
+.user-profile-page-data {
+    margin-left: 6%;
+}
+
+.follow-user-button {
+    margin-left: 5%;
+    border: solid 1px grey;
+    border-radius: 8px;
+    background-color: #ffd700;
+    width: 15%;
 }
 
 .user-profile-page-data {
-    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-data-class {
+    margin: 0px;
+    margin-bottom: 2%;
 }
