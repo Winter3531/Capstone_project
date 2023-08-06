@@ -22,9 +22,6 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path='/'>
-            <CollectionPage />
-          </Route>
           <Route path='/collection/:userId'>
             <UserCollectionPage />
           </Route>
@@ -39,6 +36,9 @@ function App() {
           </Route>
           <Route path='/recipes/:recipeId'>
             <RecipeDetails />
+          </Route>
+          <Route path='/'>
+            <CollectionPage />
           </Route>
         </Switch>
       )}
